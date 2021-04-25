@@ -1,0 +1,130 @@
+body {
+  overflow-x: hidden;
+}
+main {
+  min-height: 80vh;
+}
+.navTop {
+  background-color: #e0e0e0 !important;
+}
+.navTop a {
+  color: rgb(160, 160, 160);
+  padding: 8px !important;
+}
+.navTop a:hover {
+  color: black !important;
+}
+
+/********* Carousel ***********/
+
+.carousel-item {
+  height: 70vh;
+}
+.carousel-item img {
+  height: 100%;
+}
+
+/****** Card ********/
+.homeCard {
+  height: 25vh;
+}
+.homeCard .card {
+  height: 100%;
+}
+
+.possible_deal {
+  background-color: #e3e8ec;
+}
+
+.possible_card {
+  transition: 0.2s;
+}
+
+.possible_card:hover {
+  transform: scale(1.03);
+  opacity: 0.89;
+}
+
+footer {
+  background-color: #e0e0e0;
+}
+
+/********* Table*******/
+.table_img {
+  height: 50px;
+  width: 50px;
+}
+.table_img img {
+  height: 100%;
+  width: 100%;
+
+}
+
+
+/********* Cart ***********/
+.subPrice {
+  font-weight: bold;
+}
+
+
+/*** Media query ****/
+
+@media screen and (max-width: 426px) {
+  .carousel-item {
+    height: 100%;
+  }
+  .carousel-item img {
+    height: 100%;
+  }
+  .homeCard {
+    height: 100%;
+    margin-bottom: 20px;
+  }
+  .homeCard .card {
+    height: 100%;
+  }
+}
+@media screen and (max-width: 769px) {
+  .carousel-item {
+    height: 100%;
+  }
+  .carousel-item img {
+    height: 100%;
+  }
+  .homeCard {
+    height: 100%;
+  }
+  .homeCard .card {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  .carousel-item {
+    height: 100%;
+  }
+  .carousel-item img {
+    height: 100%;
+  }
+  .homeCard {
+    height: 100%;
+  }
+  .homeCard .card {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 1041px) {
+  .carousel-item {
+    height: 100%;
+  }
+  .carousel-item img {
+    height: 100%;
+  }
+  .homeCard {
+    height: 100%;
+  }
+  .homeCard .card {
+    height: 100%;
+  }
+}
