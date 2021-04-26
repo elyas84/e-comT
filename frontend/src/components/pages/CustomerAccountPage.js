@@ -51,7 +51,7 @@ export default function CustomerAccountPage() {
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control type="password" />
             </Form.Group>
-            <Button variant="primary" type="submit" variant="info">
+            <Button variant="primary" variant="info">
               Save changes
             </Button>
           </Form>

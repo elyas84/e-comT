@@ -21,7 +21,7 @@ import {
   USER_PROFILE_UPDATE_REST,
 } from "../constences/userConstence";
 
-export const userLoginReducer = (state = {}, action) => {
+export const userLoginReducer = (state =  {} , action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return {
@@ -52,12 +52,14 @@ export const userRegisterReducer = (state = {}, action) => {
     case USER_REG_REQUEST:
       return {
         loading: true,
+        registerSuccess: false,
       };
 
     case USER_REG_SUCCESS:
       return {
         loading: false,
         userDetail: action.payload,
+        registerSuccess: true
       };
 
     case USER_REG_FAIL:
@@ -65,6 +67,7 @@ export const userRegisterReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+
 
     default:
       return state;

@@ -1,6 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { register, login } from "../../redux/actions/userActions";
+import { useHistory } from "react-router-dom";
+import { USER_REG_REST } from "../../redux/constences/userConstence";
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
 export default function RegisterPage() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { registerSuccess, userDetail, error, loading } = userRegister;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetail: loginUserDetail } = userLogin;
+
+  // console.log("userDetail: ", userDetail);
+
+  const [regName, setRegName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [pass1, setPass1] = useState("");
+  const [pass2, setPass2] = useState("");
+  const [warnngMsg, setWarningMsg] = useState(null);
+
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, pass));
+    setEmail("");
+    setPass("");
+  };
+  useEffect(() => {
+    if (userDetail && registerSuccess) {
+      dispatch({
+        type: USER_REG_REST,
+      });
+      window.alert(userDetail.name + " is registered, please Login");
+    }
+  }, [userDetail, dispatch, registerSuccess]);
+
+  useEffect(() => {
+    if (loginUserDetail && loginUserDetail.name) {
+         window.alert(loginUserDetail.name + ", your desktop is preparing. ");
+      history.push("/customer-orders");
+   
+    }
+  }, [loginUserDetail, history]);
+
+  const registerHandler = (e) => {
+    e.preventDefault();
+    if (pass1 !== pass2) {
+      setWarningMsg("passwords do not match!");
+    } else {
+      dispatch(register(regName, regEmail, pass1));
+    }
+    setRegName("");
+    setRegEmail("");
+    setPass1("");
+    setPass1("");
+  };
+
   return (
     <Container>
       <Row className="py-5 justify-content-center">
@@ -21,21 +82,50 @@ export default function RegisterPage() {
             <hr />
           </div>
 
-          <Form>
+          {loading && <Loader />}
+          {error && <Message>{error}</Message>}
+          {warnngMsg && (
+            <Message variant="danger">Password do not match!</Message>
+          )}
+          <Form onSubmit={registerHandler}>
             <Form.Group controlId="name">
               <Form.Label>Your name</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control
+                type="text"
+                value={regName}
+                onChange={(e) => {
+                  setRegName(e.target.value);
+                }}
+              />
             </Form.Group>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" />
+              <Form.Control
+                type="email"
+                value={regEmail}
+                onChange={(e) => {
+                  setRegEmail(e.target.value);
+                }}
+              />
             </Form.Group>
 
-            <Form.Group controlId="pass1">
+            <Form.Group
+              controlId="pass1"
+              value={pass1}
+              onChange={(e) => {
+                setPass1(e.target.value);
+              }}
+            >
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" />
             </Form.Group>
-            <Form.Group controlId="pass2">
+            <Form.Group
+              controlId="pass2"
+              value={pass2}
+              onChange={(e) => {
+                setPass2(e.target.value);
+              }}
+            >
               <Form.Label>Comfirm Password</Form.Label>
               <Form.Control type="password" />
             </Form.Group>
@@ -60,15 +150,27 @@ export default function RegisterPage() {
             <hr />
           </div>
 
-          <Form>
-            <Form.Group controlId="formBasicEmail">
+          <Form onSubmit={loginHandler}>
+            <Form.Group controlId="email1">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" />
+              <Form.Control
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
             </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId="pass">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" />
+              <Form.Control
+                type="password"
+                value={pass}
+                onChange={(e) => {
+                  setPass(e.target.value);
+                }}
+              />
             </Form.Group>
 
             <Button variant="primary" type="submit">

@@ -18,6 +18,7 @@ import CustomerOrderPage from "./components/pages/CustomerOrderPage";
 import Checkout2Page from "./components/pages/Checkout2Page";
 import Checkout3Page from "./components/pages/Checkout3Page";
 import AboutPage from "./components/pages/AboutPage";
+import ErrorPage from "./components/pages/ErrorPage";
 
 export default function App() {
   return (
@@ -53,6 +54,7 @@ export default function App() {
             path="/customer-order"
             component={CustomerOrderPage}
           ></Route>
+          <Route component= {ErrorPage}></Route>
         </Switch>
       </main>
 

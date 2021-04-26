@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/userActions";
 export default function CustomerOrdersPage() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetail } = userLogin;
+
+  useEffect(() => {
+    if (!userDetail.name) {
+      history.push("/");
+    }
+  }, [userDetail, history]);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    history.push("/");
+  };
   return (
     <Container>
       <Row className="py-5">
@@ -17,17 +34,16 @@ export default function CustomerOrdersPage() {
             <Link to="/customer-account">
               <ListGroup.Item as="li">My account</ListGroup.Item>
             </Link>
-            <Link to="/">
-              <ListGroup.Item as="li">Logout</ListGroup.Item>
+            <Link to="#">
+              <ListGroup.Item as="li" onClick={logoutHandler}>
+                Logout
+              </ListGroup.Item>
             </Link>
           </ListGroup>
         </Col>
         <Col>
           <Row>
-            <Col
-              lg={12}
-            
-            >
+            <Col lg={12}>
               <Row>
                 <Col>
                   <h2>My orders</h2>
