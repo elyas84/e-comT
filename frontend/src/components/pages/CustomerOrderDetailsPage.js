@@ -3,7 +3,7 @@ import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
-export default function CustomerOrdersPage() {
+export default function CustomerOrderPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -21,7 +21,7 @@ export default function CustomerOrdersPage() {
   };
   return (
     <Container>
-      <Row className="py-5">
+      <Row>
         <Col lg={3}>
           <ListGroup as="ul">
             <ListGroup.Item as="li" active>
@@ -31,6 +31,9 @@ export default function CustomerOrdersPage() {
               <ListGroup.Item as="li">My orders</ListGroup.Item>
             </Link>
 
+            <Link to="/order-details">
+              <ListGroup.Item as="li">Order Details</ListGroup.Item>
+            </Link>
             <Link to="/customer-account">
               <ListGroup.Item as="li">My account</ListGroup.Item>
             </Link>
@@ -41,22 +44,19 @@ export default function CustomerOrdersPage() {
             </Link>
           </ListGroup>
         </Col>
-        <Col>
+        <Col lg={8}>
           <Row>
-            <Col lg={12}>
-              <Row>
-                <Col>
-                  <h2>My orders</h2>
-                  <p>Your orders on one place.</p>
-                  <span>
-                    If you have any questions, please feel free to{" "}
-                    <Link to="/contact">contact us</Link>, our customer service
-                    center is working for you 24/7.
-                  </span>
-                </Col>
-              </Row>
-              <hr />
-
+            <Col>
+              <h2>Order # 123446654879</h2>
+              <p>
+                Order #1735 was placed on 22/06/2013 and is currently Being
+                prepared. <br />
+                <span>
+                  If you have any questions, please feel free to{" "}
+                  <Link to="/contact">contact us</Link>, our customer service
+                  center is working for you 24/7.
+                </span>
+              </p>
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
@@ -84,7 +84,6 @@ export default function CustomerOrdersPage() {
                 </tbody>
               </Table>
             </Col>
-            <Col></Col>
           </Row>
         </Col>
       </Row>

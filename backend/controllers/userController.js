@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (user) {
-      res.status(400).json({
+     return res.status(400).json({
         message: "Email is already taken.",
       });
     }
@@ -103,7 +103,7 @@ exports.login = async (req, res) => {
       });
     }
     return res.status(401).json({
-      message: "Invalid credential",
+      message: "Invalid email or password, please check it.",
     });
   } catch (error) {
     console.log(error.message);

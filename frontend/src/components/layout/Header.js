@@ -1,54 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Nav,
   Navbar,
   FormControl,
   Form,
-  Button,
   Container,
-  Modal,
   Badge,
 } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-// import Loader from "../layout/Loader";
-// import Message from "../layout/Message";
 
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
 
 export default function Header() {
   const dispatch = useDispatch();
-  // const history = useHistory();
+  
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, userDetail, error } = userLogin;
-
-  // const [email, setEmail] = useState("");
-  // const [pass, setPass] = useState("");
-
-  // MODAL
-  // const [show, setShow] = useState(false);
-
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-
-  // useEffect(() => {
-  //   if (!userDetail) {
-  //     history.push("/");
-  //   }
-  //   else {
-  //         setShow(false);
-  //         history.push("/customer-orders")
-  //   }
-
-  // }, [userDetail, history]);
-
-  // const loginHandler = (e) => {
-  //   e.preventDefault();
-  //   dispatch(login(email, pass));
-  //   setEmail("");
-  //   setPass("");
-  // };
+  const {userDetail } = userLogin;
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -60,11 +29,11 @@ export default function Header() {
           <>
             <LinkContainer
               to="#"
-              style={{ color: "green", fontWeight: "bold" }}
+              style={{ color: "black", fontWeight: "bold" }}
             >
-              <Nav.Link> Hi, {userDetail.name}|</Nav.Link>
+              <Nav.Link> Hi, {userDetail.name} |</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/customer-orders">
+            <LinkContainer to="/profile">
               <Nav.Link>My profile |</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/" onClick={logoutHandler}>
@@ -73,10 +42,10 @@ export default function Header() {
           </>
         ) : userDetail && userDetail.name && userDetail.isAdmin ? (
           <>
-            <LinkContainer to="#" style={{ color: "red", fontWeight: "bold" }}>
+            <LinkContainer to="#" style={{ color: "black", fontWeight: "bold" }}>
               <Nav.Link>Hi, {userDetail.name}|</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/customer-orders">
+            <LinkContainer to="/profile">
               <Nav.Link>My profile |</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/" onClick={logoutHandler}>
@@ -85,11 +54,11 @@ export default function Header() {
           </>
         ) : (
           <>
-            {/* <LinkContainer to="/">
-              <Nav.Link onClick={handleShow}>Login |</Nav.Link>
-            </LinkContainer> */}
-            <LinkContainer to="/register">
+            <LinkContainer to="/login">
               <Nav.Link>Login |</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/register">
+              <Nav.Link>Register |</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/contact">
               <Nav.Link>Contact</Nav.Link>
@@ -98,47 +67,6 @@ export default function Header() {
         )}
       </Nav>
 
-      {/* <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Customer Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {loading && <Loader />}
-          {error && <Message variant="danger">{error}</Message>}
-          <Form onSubmit={loginHandler}>
-            <Form.Group controlId="email1">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                value={pass}
-                onChange={(e) => {
-                  setPass(e.target.value);
-                }}
-              />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-              Log in
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal> */}
       <Navbar bg="light" expand="lg">
         <Container>
           <LinkContainer to="/">

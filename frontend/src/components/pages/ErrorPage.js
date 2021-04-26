@@ -14,7 +14,7 @@ export default function ErrorPage() {
                     <h1 className="text-center py-3">
                       E-shop Community
                     </h1>
-                    <h3>We are sorry - this page is not here anymore</h3>
+                    {/* <h3>We are sorry - this page is not here anymore</h3> */}
                     <h4 className="text-muted py-3 text-center">Error 404 - Page not found</h4>
                   
                     <p className="text-center">

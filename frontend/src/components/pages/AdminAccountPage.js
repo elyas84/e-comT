@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
+import { Col, Container, Row, ListGroup, Form, Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
-export default function ProductListPage() {
+
+export default function AdminAccountPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -14,14 +15,13 @@ export default function ProductListPage() {
       history.push("/");
     }
   }, [userDetail, history]);
-
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
   };
   return (
     <Container>
-      <Row className="">
+      <Row className="m-auto py-5">
         <Col lg={3}>
           <ListGroup as="ul">
             <ListGroup.Item as="li" active>
@@ -53,40 +53,33 @@ export default function ProductListPage() {
           </ListGroup>
         </Col>
         <Col>
-          <Row>
-            <Col lg={12}>
-              <Row>
-                <Col>
-                  <h2>Product List</h2>
-                </Col>
-              </Row>
-
-              <Table striped bordered hover responsive>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>brand</th>
-                    <th>price</th>
-                    <th>countInStock</th>
-                    <th>Edit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="p-1">Samsung A20</td>
-                    <td className="p-1">Samsung</td>
-
-                    <td className="p-1">$ 218</td>
-                    <td className="p-1">24</td>
-                    <td className="p-0 text-center">
-                      <i className="fas fa-trash "></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+          <Row className="p-2">
+            <Col>
+              <h2>My account</h2>
+              <p>
+                Change your personal details or your password here. <br />
+              </p>
             </Col>
-            <Col></Col>
           </Row>
+
+          <Form style={{ width: "60%" }} className="m-auto">
+            <Form.Group controlId="updateEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" />
+            </Form.Group>
+
+            <Form.Group controlId="newPassword">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control type="password" />
+            </Form.Group>
+            <Form.Group controlId="comfirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control type="password" />
+            </Form.Group>
+            <Button variant="primary" variant="info">
+              Save changes
+            </Button>
+          </Form>
         </Col>
       </Row>
     </Container>
