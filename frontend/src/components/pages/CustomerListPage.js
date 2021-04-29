@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
+import { Col, Container, Row, ListGroup, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../redux/actions/userActions";
+import { logout, getUsers } from "../../redux/actions/userActions";
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
 export default function CustomerListPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetail } = userLogin;
 
+  const userList = useSelector((state) => state.userList);
+  const { loading, error, users } = userList;
+  console.log("users: ", users);
+
   useEffect(() => {
-    if (!userDetail.name) {
+    if (!userDetail.isAdmin) {
       history.push("/");
+    } else {
+      dispatch(getUsers());
     }
-  }, [userDetail, history]);
+  }, [userDetail, history, dispatch]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -39,9 +47,9 @@ export default function CustomerListPage() {
             <Link to="/admin/new-product">
               <ListGroup.Item as="li">New Product</ListGroup.Item>
             </Link>
-            <Link to="/admin/edit-product">
+            {/* <Link to="/admin/edit-product">
               <ListGroup.Item as="li">Edit Product</ListGroup.Item>
-            </Link>
+            </Link> */}
             <Link to="/admin/account">
               <ListGroup.Item as="li">My account</ListGroup.Item>
             </Link>
@@ -64,23 +72,33 @@ export default function CustomerListPage() {
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Edit</th>
+                    <th className="p-2">Nr</th>
+                    <th className="p-2">Name</th>
+                    <th className="p-2">Email</th>
+                    <th className="p-2">Phone</th>
+                    <th className="p-2">Edit</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="p-1">154564878979</td>
-                    <td className="p-1">Elyas</td>
-                    <td className="p-1">elyas@test.com</td>
-                    <td className="p-1">+45678787987</td>
-                    <td className="p-0 text-center">
-                      <i className="fas fa-trash "></i>
-                    </td>
-                  </tr>
+                  {loading && <Loader />}
+                  {error && <Message>{error}</Message>}
+                  {users && users.length ? (
+                    users.map((user,index) =>
+                      user.isAdmin ? null : (
+                        <tr key={user._id}>
+                          <td className="p-2">{index}</td>
+                          <td className="p-2">{user.name}</td>
+                          <td className="p-2">{user.email}</td>
+                          <td className="p-2">+45678787987</td>
+                          <td className="p-0 text-center">
+                            <i className="fas fa-trash "></i>
+                          </td>
+                        </tr>
+                      )
+                    )
+                  ) : (
+                    null
+                  )}
                 </tbody>
               </Table>
             </Col>

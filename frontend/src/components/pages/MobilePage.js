@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductList } from "../../redux/actions/productActions";
 import {
   Col,
   Container,
@@ -8,14 +10,27 @@ import {
   Badge,
   Button,
 } from "react-bootstrap";
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
+import Product from "../layout/Product";
 import { Link } from "react-router-dom";
 export default function MobilePage() {
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.productList);
+  const { loading, products, error } = productList;
+
+  useEffect(() => {
+    dispatch(getProductList());
+  }, [dispatch]);
+
   return (
     <Container>
       <Row className="p-3">
         <Col lg={3}>
           <Card>
             <Card.Header>Mobiles</Card.Header>
+
             <ListGroup variant="flush">
               <p className="p-2">
                 Samsung{" "}
@@ -43,64 +58,24 @@ export default function MobilePage() {
           </Card>
         </Col>
         <Col lg={8}>
-          <Row>
-            <Col lg={5} md={6} sm={12}>
-              <Card>
-                <Card.Img variant="top" src="images/samsung.jpg" />
-                <Card.Body>
-                  <Card.Title>Samsung</Card.Title>
-                  <Card.Text>$ 250</Card.Text>
-                  <Row>
-                    <Col sm={6}>
-                      {" "}
-                      <Link to="/detail">
-                        <Button
-                          style={{ padding: "7px" }}
-                          variant="outline-secondary"
-                        >
-                          View detail
-                        </Button>
-                      </Link>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <Row className="mt-5">
+              {products.map((product) => {
+                if (product.category === "mobile") {
+                  return (
+                    <Col sm={12} md={6} lg={3} key={product._id}>
+                      <Product product={product} />
                     </Col>
-                    <Col sm={6}>
-                      {" "}
-                      <Link to="/detail">
-                        <Button
-                          style={{ padding: "7px" }}
-                          variant="outline-secondary"
-                        >
-                          Add to cart
-                        </Button>
-                      </Link>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Col>
-            {/* <Col lg={5} md={6} sm={12}>
-              <Card>
-                <Card.Img variant="top" src="images/headset.jpg" />
-                <Card.Body>
-                  <Card.Title>headset</Card.Title>
-                  <Card.Text>$ 250</Card.Text>
-                  <Row>
-                    <Col lg={6}>
-                      {" "}
-                      <Button style={{ padding: "7px" }} variant="primary">
-                        View detail
-                      </Button>
-                    </Col>
-                    <Col lg={6}>
-                      {" "}
-                      <Button style={{ padding: "7px" }} variant="primary">
-                        Add to cart
-                      </Button>
-                    </Col>
-                  </Row>
-                </Card.Body>
-              </Card>
-            </Col> */}
-          </Row>
+                  );
+                }
+              })}
+            </Row>
+          )}
+
           <Row className="mt-5">
             <Col lg={12}>
               <Button variant="info">Load more</Button>

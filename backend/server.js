@@ -16,7 +16,7 @@ const uploadRoute = require("./routes/uploadRoute");
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/orders", orderRoute);
-app.use("/api/uploads", uploadRoute);
+app.use("/api/upload", uploadRoute);
 
 //paypal
 app.get("/api/config/paypal", (req, res) =>

@@ -50,20 +50,29 @@ exports.getProduct = async (req, res) => {
 
 // @desc POST/create a product
 // @route /api/prroducts/
-// @access Public
+// @access prodcuted
 exports.createNewProduct = async (req, res) => {
-  const product = new Product({
-    name: "Demo name",
-    price: 0,
-    createdBy: req.user._id,
-    image: "/images/co1.jpg",
-    brand: "Demo brand",
-    category: "Demo category",
-    countInStock: 0,
-    description: "Demo description",
-    createdBy: req.user._id,
-  });
+  const {
+    name,
+    price,
+    brand,
+    category,
+    productImg,
+    description,
+    countInStock,
+  } = req.body;
+
   try {
+    const product = new Product({
+      name,
+      price,
+      createdBy: req.user._id,
+      productImg,
+      brand,
+      category,
+      countInStock,
+      description,
+    });
     await product.save();
     res.status(201).json(product);
   } catch (error) {

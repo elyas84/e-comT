@@ -28,7 +28,7 @@ export default function Header() {
         {userDetail && userDetail.name && !userDetail.isAdmin ? (
           <>
             <LinkContainer
-              to="#"
+              to="/"
               style={{ color: "black", fontWeight: "bold" }}
             >
               <Nav.Link> Hi, {userDetail.name} |</Nav.Link>
@@ -42,7 +42,7 @@ export default function Header() {
           </>
         ) : userDetail && userDetail.name && userDetail.isAdmin ? (
           <>
-            <LinkContainer to="#" style={{ color: "black", fontWeight: "bold" }}>
+            <LinkContainer to="/" style={{ color: "black", fontWeight: "bold" }}>
               <Nav.Link>Hi, {userDetail.name}|</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/profile">
@@ -88,7 +88,7 @@ export default function Header() {
               <LinkContainer to="/computer">
                 <Nav.Link>Computer</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/category">
+              <LinkContainer to="/products">
                 <Nav.Link>All Product</Nav.Link>
               </LinkContainer>
             </Nav>

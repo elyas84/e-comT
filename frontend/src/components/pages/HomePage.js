@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductList } from "../../redux/actions/productActions";
 import { Carousel, Container, Col, Row, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
+import Product from "../layout/Product";
 export default function HomePage() {
+  const dispatch = useDispatch();
+
+  const productList = useSelector((state) => state.productList);
+  const { loading, products, error } = productList;
+
+  useEffect(() => {
+    dispatch(getProductList());
+  }, [dispatch]);
+
   return (
     <>
       <Container>
@@ -93,53 +107,21 @@ export default function HomePage() {
         </Col>
       </Row>
       <Container>
-        <Row className="mt-5 mb-5">
-          <Col lg={3} md={4} sm={12}>
-            <Card className="possible_card">
-              <Card.Img variant="top" src="images/headset.jpg" />
-              <Card.Body className="text-center">
-                <Link to="/detail">
-                  <Card.Title>Headset</Card.Title>
-                </Link>
-
-                <Card.Text>$ 120</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={4} sm={12}>
-            <Card>
-              <Card.Img variant="top" src="images/macbook.jpg" />
-              <Card.Body className="text-center">
-                <Card.Title>Headset</Card.Title>
-                <Link to="#">
-                  <Card.Text>$ 120</Card.Text>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={4} sm={12}>
-            <Card>
-              <Card.Img variant="top" src="images/controller.jpg" />
-              <Card.Body className="text-center">
-                <Card.Title>Headset</Card.Title>
-                <Link to="#">
-                  <Card.Text>$ 120</Card.Text>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={3} md={4} sm={12}>
-            <Card>
-              <Card.Img variant="top" src="images/drone.jpg" />
-              <Card.Body className="text-center">
-                <Card.Title>Headset</Card.Title>
-                <Link to="#">
-                  <Card.Text>$ 120</Card.Text>
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Row className="mt-5">
+            {products
+              .map((product) => (
+                <Col sm={12} md={6} lg={3} key={product._id}>
+                  <Product product={product} />
+                </Col>
+              ))
+              .slice(0, 4)}
+          </Row>
+        )}
       </Container>
 
       <Container>

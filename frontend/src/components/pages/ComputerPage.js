@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductList } from "../../redux/actions/productActions";
 import {
   Col,
   Container,
@@ -9,107 +11,78 @@ import {
   Button,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
+import Product from "../layout/Product";
 export default function ComputerPage() {
-    return (
-      <>
-        <Container>
-          <Row className="p-3">
-            <Col lg={3}>
-              <Card>
-                <Card.Header>Computers</Card.Header>
-                <ListGroup variant="flush">
-                  <p className="p-2">
-                    Hp{" "}
-                    <Badge pill variant="info">
-                      10
-                    </Badge>
-                  </p>
+  const dispatch = useDispatch();
 
-                  <ListGroup.Item>
-                    <Link to="/detail">Hp Pavillion</Link>
-                  </ListGroup.Item>
-                </ListGroup>
+  const productList = useSelector((state) => state.productList);
+  const { loading, products, error } = productList;
 
-                <ListGroup variant="flush">
-                  <p className="p-2">
-                    MacBook{" "}
-                    <Badge pill variant="info">
-                      5
-                    </Badge>
-                  </p>
-                  <ListGroup.Item>
-                    <Link to="/detail">Macbook pro</Link>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card>
-            </Col>
-            <Col lg={8}>
-              <Row>
-                <Col lg={5} md={6} sm={12}>
-                  <Card>
-                    <Card.Img variant="top" src="images/samsung.jpg" />
-                    <Card.Body>
-                      <Card.Title>Samsung</Card.Title>
-                      <Card.Text>$ 250</Card.Text>
-                      <Row>
-                        <Col sm={6}>
-                          {" "}
-                          <Link to="/detail">
-                            <Button
-                              style={{ padding: "7px" }}
-                              variant="outline-secondary"
-                            >
-                              View detail
-                            </Button>
-                          </Link>
-                        </Col>
-                        <Col sm={6}>
-                          {" "}
-                          <Link to="/detail">
-                            <Button
-                              style={{ padding: "7px" }}
-                              variant="outline-secondary"
-                            >
-                              Add to cart
-                            </Button>
-                          </Link>
-                        </Col>
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                {/* <Col lg={5} md={6} sm={12}>
-                  <Card>
-                    <Card.Img variant="top" src="images/hp.jpg" />
-                    <Card.Body>
-                      <Card.Title>headset</Card.Title>
-                      <Card.Text>$ 250</Card.Text>
-                      <Row>
-                        <Col lg={6}>
-                          {" "}
-                          <Button style={{ padding: "7px" }} variant="primary">
-                            View detail
-                          </Button>
-                        </Col>
-                        <Col lg={6}>
-                          {" "}
-                          <Button style={{ padding: "7px" }} variant="primary">
-                            Add to cart
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Card.Body>
-                  </Card>
-                </Col> */}
-              </Row>
+  useEffect(() => {
+    dispatch(getProductList());
+  }, [dispatch]);
+
+  return (
+    <>
+      <Container>
+        <Row className="p-3">
+          <Col lg={3}>
+            <Card>
+              <Card.Header>Computers</Card.Header>
+              <ListGroup variant="flush">
+                <p className="p-2">
+                  Hp{" "}
+                  <Badge pill variant="info">
+                    10
+                  </Badge>
+                </p>
+
+                <ListGroup.Item>
+                  <Link to="/detail">Hp Pavillion</Link>
+                </ListGroup.Item>
+              </ListGroup>
+
+              <ListGroup variant="flush">
+                <p className="p-2">
+                  MacBook{" "}
+                  <Badge pill variant="info">
+                    5
+                  </Badge>
+                </p>
+                <ListGroup.Item>
+                  <Link to="/detail">Macbook pro</Link>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
+          <Col lg={8}>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message variant="danger">{error}</Message>
+            ) : (
               <Row className="mt-5">
-                <Col lg={12}>
-                  <Button variant="info">Load more</Button>
-                </Col>
+                {products.map((product) => {
+                  if (product.category === "pc") {
+                    return (
+                      <Col sm={12} md={6} lg={3} key={product._id}>
+                        <Product product={product} />
+                      </Col>
+                    );
+                  }
+                })}
               </Row>
-            </Col>
-          </Row>
-        </Container>
-      </>
-    );
+            )}
+            <Row className="mt-5">
+              <Col lg={12}>
+                <Button variant="info">Load more</Button>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }

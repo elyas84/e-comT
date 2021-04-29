@@ -19,16 +19,14 @@ export default function RegisterPage() {
 
 
   useEffect(() => {
-    if ( registerSuccess) {
+    if (registerSuccess) {
       dispatch({
         type: USER_REG_REST,
       });
       window.alert(userDetail.name + " is registered, please Login");
-      history.push("/login")
-    
+      history.push("/login");
     }
-  
-  }, [userDetail, dispatch, registerSuccess]);
+  }, [userDetail, dispatch, registerSuccess, history]);
 
 
   const registerHandler = (e) => {

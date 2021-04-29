@@ -40,9 +40,9 @@ export default function CustomersOrderListPage() {
               <Link to="/admin/new-product">
                 <ListGroup.Item as="li">New Product</ListGroup.Item>
               </Link>
-              <Link to="/admin/edit-product">
+              {/* <Link to="/admin/edit-product">
                 <ListGroup.Item as="li">Edit Product</ListGroup.Item>
-              </Link>
+              </Link> */}
               <Link to="/admin/account">
                 <ListGroup.Item as="li">My account</ListGroup.Item>
               </Link>
@@ -65,19 +65,19 @@ export default function CustomersOrderListPage() {
                 <Table striped bordered hover responsive>
                   <thead>
                     <tr>
-                      <th>Order</th>
-                      <th>Customer</th>
-                      <th>Total</th>
-                      <th>Paid</th>
-                      <th>delivered</th>
+                      <th className="p-2">Order</th>
+                      <th className="p-2">Customer</th>
+                      <th className="p-2">Total</th>
+                      <th className="p-2">Paid</th>
+                      <th className="p-2">delivered</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="p-1">154564878979</td>
-                      <td className="p-1">John</td>
-                      <td className="p-1">$ 150.00</td>
-                      <td className="p-1">
+                      <td className="p-2">154564878979</td>
+                      <td className="p-2">John</td>
+                      <td className="p-2">$ 150.00</td>
+                      <td className="p-2">
                         <Badge variant="info">Ok</Badge>
                       </td>
                       <td className="p-0">

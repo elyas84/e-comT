@@ -20,7 +20,7 @@ import {
 
 import axios from "axios";
 
-export const productList = (keyword = "") => async (dispatch) => {
+export const getProductList = (keyword = "") => async (dispatch) => {
   try {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
@@ -62,7 +62,7 @@ export const productListDetail = (id) => async (dispatch) => {
   }
 };
 
-export const productCreate = () => async (dispatch, getState) => {
+export const createProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_CREATE_REQUEST,
@@ -77,7 +77,7 @@ export const productCreate = () => async (dispatch, getState) => {
         Authorization: "Bearer " + userDetail.token,
       },
     };
-    const response = await axios.post("/api/products/", {}, config);
+    const response = await axios.post("/api/products/",product, config);
     // console.log("res:", res)
 
     dispatch({
@@ -100,7 +100,7 @@ export const productCreate = () => async (dispatch, getState) => {
   }
 };
 
-export const productUpdate = (product) => async (dispatch, getState) => {
+export const updateProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_UPDATE_REQUEST,
@@ -137,7 +137,7 @@ export const productUpdate = (product) => async (dispatch, getState) => {
   }
 };
 
-export const productDelete = (id) => async (dispatch, getState) => {
+export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_DELETE_REQUEST,

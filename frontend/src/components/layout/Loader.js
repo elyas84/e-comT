@@ -4,11 +4,11 @@ export default function Loader() {
   return (
     <Spinner
       animation="grow"
-      variant="info"
+      variant="primary"
       role="status"
       style={{
-        width: "100px",
-        height: "100px",
+        width: "10px",
+        height: "10px",
         margin: "auto",
         display: "block",
       }}

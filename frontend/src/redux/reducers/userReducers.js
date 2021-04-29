@@ -85,7 +85,7 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       return {
         loading: false,
         // user: console.log("user: ", action.payload),
-        user: action.payload.data,
+        user: action.payload,
       };
 
     case USER_DETAILS_FAIL:
@@ -110,7 +110,7 @@ export const userListReducer = (state = { users: [] }, action) => {
 
       return {
         loading: false,
-        users: action.payload.data,
+        users: action.payload,
       };
 
     case USER_LIST_FAIL:

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Col,
   Container,
@@ -8,8 +9,24 @@ import {
   Badge,
   Button,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
-export default function CategoryPage() {
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getProductList,
+} from "../../redux/actions/productActions";
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
+import Product from "../layout/Product";
+export default function AllProductPage() {
+
+    const dispatch = useDispatch();
+
+       const productList = useSelector((state) => state.productList);
+       const { loading, products, error } = productList;
+
+       useEffect(() => {
+         dispatch(getProductList());
+       }, [dispatch]);
+
   return (
     <>
       <Container>
@@ -44,29 +61,21 @@ export default function CategoryPage() {
             </Card>
           </Col>
           <Col lg={8}>
-            <Row>
-              <Col lg={4} md={6} sm={12}>
-                <Card>
-                  <Card.Img variant="top" src="images/macbook.jpg" />
-                  <Card.Body>
-                    <Link to="/detail">
-                      <Card.Title>Samsung</Card.Title>
-                    </Link>
-
-                    <Card.Text>$ 250</Card.Text>
-                    <Link to="/cart">
-                      <Button
-                        style={{ padding: "7px" }}
-                        variant="outline-secondary"
-                        block
-                      >
-                        Add to cart
-                      </Button>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message variant="danger">{error}</Message>
+            ) : (
+              <Row className="mt-5">
+                {products
+                  .map((product) => (
+                    <Col sm={12} md={6} lg={3} key={product._id}>
+                      <Product product={product} />
+                    </Col>
+                  ))
+                  .slice(0, 4)}
+              </Row>
+            )}
             <Row className="mt-5">
               <Col lg={12}>
                 <Button variant="info">Load more</Button>

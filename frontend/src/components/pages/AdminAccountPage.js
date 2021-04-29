@@ -39,9 +39,9 @@ export default function AdminAccountPage() {
             <Link to="/admin/new-product">
               <ListGroup.Item as="li">New Product</ListGroup.Item>
             </Link>
-            <Link to="/admin/edit-product">
+            {/* <Link to="/admin/edit-product">
               <ListGroup.Item as="li">Edit Product</ListGroup.Item>
-            </Link>
+            </Link> */}
             <Link to="/admin/account">
               <ListGroup.Item as="li">My account</ListGroup.Item>
             </Link>

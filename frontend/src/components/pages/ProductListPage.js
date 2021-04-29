@@ -1,24 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  Row,
+  ListGroup,
+  Table,
+  Modal,
+  Button,
+} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
+import {
+  getProductList,
+  deleteProduct,
+} from "../../redux/actions/productActions";
+import Loader from "../layout/Loader";
+import Message from "../layout/Message";
+// import Product from "../layout/Product";
 export default function ProductListPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetail } = userLogin;
 
+  const productList = useSelector((state) => state.productList);
+  const { loading, products, error } = productList;
+  console.log(products);
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const { DeleteSuccess } = productDelete;
+
   useEffect(() => {
-    if (!userDetail.name) {
+    if (!userDetail.isAdmin) {
       history.push("/");
+    } else {
+      dispatch(getProductList());
     }
-  }, [userDetail, history]);
+  }, [userDetail, history, DeleteSuccess]);
 
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
   };
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [targetProd, setTargetProd] = useState("");
   return (
     <Container>
       <Row className="">
@@ -39,9 +69,9 @@ export default function ProductListPage() {
             <Link to="/admin/new-product">
               <ListGroup.Item as="li">New Product</ListGroup.Item>
             </Link>
-            <Link to="/admin/edit-product">
+            {/* <Link to="/admin/edit-product">
               <ListGroup.Item as="li">Edit Product</ListGroup.Item>
-            </Link>
+            </Link> */}
             <Link to="/admin/account">
               <ListGroup.Item as="li">My account</ListGroup.Item>
             </Link>
@@ -64,24 +94,73 @@ export default function ProductListPage() {
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>brand</th>
-                    <th>price</th>
-                    <th>countInStock</th>
-                    <th>Edit</th>
+                    <th className="p-2">Name</th>
+                    <th className="p-2">brand</th>
+                    <th className="p-2">price</th>
+                    <th className="p-2">countInStock</th>
+                    <th className="p-2">Edit</th>
+                    <th className="p-2">Delete</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td className="p-1">Samsung A20</td>
-                    <td className="p-1">Samsung</td>
 
-                    <td className="p-1">$ 218</td>
-                    <td className="p-1">24</td>
-                    <td className="p-0 text-center">
-                      <i className="fas fa-trash "></i>
-                    </td>
-                  </tr>
+                <tbody>
+                  {loading && <Loader />}
+                  {error && <Message>{error}</Message>}
+
+                  {products && products.length
+                    ? products.map((product) => (
+                        <tr key={product._id}>
+                          <td className="p-2">{product.name}</td>
+                          <td className="p-2">{product.brand}</td>
+                          <td className="p-2">{product.price}</td>
+                          <td className="p-2">{product.countInStock}</td>
+
+                          <td className="p-1">
+                            <Link
+                              to={"/admin/" + product._id + "/edit-product"}
+                              style={{ color: "green" }}
+                            >
+                              <i className="fas fa-edit"></i>
+                            </Link>
+                          </td>
+                          <td className="p-1">
+                            <i
+                              className="fas fa-trash"
+                              style={{ cursor: "pointer", color: "red" }}
+                              onClick={() => {
+                                setTargetProd(product);
+                                handleShow();
+                              }}
+                            ></i>
+                            <Modal show={show} onHide={handleClose}>
+                              <Modal.Header closeButton>
+                                <Modal.Title>Delete User</Modal.Title>
+                              </Modal.Header>
+                              <Modal.Body>
+                                <p style={{ color: "red" }}>
+                                  Are you sure to delete {targetProd.name} ?{" "}
+                                </p>
+                              </Modal.Body>
+                              <Modal.Footer>
+                                <Button variant="light" onClick={handleClose}>
+                                  Close
+                                </Button>
+                                <Button
+                                  variant="outline-danger"
+                                  onClick={() => {
+                                    dispatch(deleteProduct(targetProd._id));
+
+                                    setShow(false);
+                                  }}
+                                >
+                                  Ok
+                                </Button>
+                              </Modal.Footer>
+                            </Modal>
+                          </td>
+                        </tr>
+                      ))
+                    : null}
                 </tbody>
               </Table>
             </Col>
