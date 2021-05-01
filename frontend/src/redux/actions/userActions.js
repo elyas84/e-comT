@@ -101,7 +101,7 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const userProfile = (id) => async (dispatch, getState) => {
+export const getUserDetails = (id) => async (dispatch, getState) => {
   // in this case ID can be a profile
   try {
     dispatch({
@@ -174,7 +174,7 @@ export const profileUpdate = (user) => async (dispatch, getState) => {
       type: USER_PROFILE_UPDATE_REQUEST,
     });
     const {
-      loginOfUser: { userDetail },
+      userLogin: { userDetail },
     } = getState();
     const config = {
       headers: {
@@ -185,12 +185,10 @@ export const profileUpdate = (user) => async (dispatch, getState) => {
 
     const response = await axios.put("/api/users/profile", user, config);
 
-    // console.log("res: ", res);
+    console.log("res: ", response);
     dispatch({
       type: USER_PROFILE_UPDATE_SUCCESS,
       payload: response.data,
-      // payload: console.log("payload:", res.data),
-      // success: true,
     });
 
     dispatch({

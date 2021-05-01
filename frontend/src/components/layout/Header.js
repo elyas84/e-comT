@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Nav,
   Navbar,
-  FormControl,
-  Form,
+  // FormControl,
+  // Form,
   Container,
   Badge,
 } from "react-bootstrap";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-
+import Search from "../layout/Search";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
 
 export default function Header() {
   const dispatch = useDispatch();
-  
-  const userLogin = useSelector((state) => state.userLogin);
-  const {userDetail } = userLogin;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userDetail } = userLogin;
+
+  // const producutDetail = useSelector((state) => state.producutDetail);
+  // const { product } = producutDetail;
+  // console.log(product);
   const logoutHandler = () => {
     dispatch(logout());
   };
@@ -42,7 +45,10 @@ export default function Header() {
           </>
         ) : userDetail && userDetail.name && userDetail.isAdmin ? (
           <>
-            <LinkContainer to="/" style={{ color: "black", fontWeight: "bold" }}>
+            <LinkContainer
+              to="/"
+              style={{ color: "black", fontWeight: "bold" }}
+            >
               <Nav.Link>Hi, {userDetail.name}|</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/profile">
@@ -92,24 +98,18 @@ export default function Header() {
                 <Nav.Link>All Product</Nav.Link>
               </LinkContainer>
             </Nav>
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-            </Form>
 
             <Link to="/cart">
               <i
                 className="fas fa-shopping-cart"
                 style={{ fontSize: "2rem" }}
               ></i>{" "}
-              <Badge variant="info">2</Badge>
+              {/* <Badge variant="info">5</Badge> */}
             </Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      <Search />
     </>
   );
 }

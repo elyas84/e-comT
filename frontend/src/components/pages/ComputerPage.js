@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductList } from "../../redux/actions/productActions";
 import {
@@ -19,69 +19,71 @@ export default function ComputerPage() {
 
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
-
+const [visible, setVisible] = useState(3);
   useEffect(() => {
     dispatch(getProductList());
   }, [dispatch]);
 
+  const loadMore = () => {
+    setVisible((prevValue) => prevValue + 3);
+  };
   return (
     <>
       <Container>
+        <h2 className="text-center py-5"> Computers and games</h2>
         <Row className="p-3">
-          <Col lg={3}>
-            <Card>
-              <Card.Header>Computers</Card.Header>
-              <ListGroup variant="flush">
-                <p className="p-2">
-                  Hp{" "}
-                  <Badge pill variant="info">
-                    10
-                  </Badge>
-                </p>
-
-                <ListGroup.Item>
-                  <Link to="/detail">Hp Pavillion</Link>
-                </ListGroup.Item>
-              </ListGroup>
-
-              <ListGroup variant="flush">
-                <p className="p-2">
-                  MacBook{" "}
-                  <Badge pill variant="info">
-                    5
-                  </Badge>
-                </p>
-                <ListGroup.Item>
-                  <Link to="/detail">Macbook pro</Link>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </Col>
-          <Col lg={8}>
-            {loading ? (
-              <Loader />
-            ) : error ? (
-              <Message variant="danger">{error}</Message>
-            ) : (
-              <Row className="mt-5">
-                {products.map((product) => {
-                  if (product.category === "pc") {
-                    return (
-                      <Col sm={12} md={6} lg={3} key={product._id}>
-                        <Product product={product} />
-                      </Col>
-                    );
-                  }
-                })}
-              </Row>
-            )}
-            <Row className="mt-5">
-              <Col lg={12}>
-                <Button variant="info">Load more</Button>
-              </Col>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <Row>
+              {products.map((product) => {
+                if (product.category === "pc" || product.category === "game") {
+                  return (
+                    <Col sm={12} md={6} lg={4} key={product._id}>
+                      <Product product={product} />
+                    </Col>
+                  );
+                }
+              })}
             </Row>
+          )}
+        </Row>
+        <Row className="mt-5">
+          <Col lg={12}>
+            <Button variant="primary" onClick={loadMore}>
+              Load more
+            </Button>
           </Col>
         </Row>
+      </Container>
+      <h3
+        className="py-3 text-center mt-5 mb-5 text-white"
+        style={{ backgroundColor: "#919aa1" }}
+      >
+        You may also like these products
+      </h3>
+      <Container>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Row className="mt-5">
+            {products
+              .map((product) => {
+                if (product.category === "mobile") {
+                  return (
+                    <Col sm={12} md={6} lg={3} key={product._id}>
+                      <Product product={product} />
+                    </Col>
+                  );
+                }
+              })
+              .slice(0, 4)}
+          </Row>
+        )}
       </Container>
     </>
   );

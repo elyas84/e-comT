@@ -1,10 +1,10 @@
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
-  CART_SAVE_ADRESS,
+  CART_SAVE_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
 } from "../constences/cartConstence";
-
+import axios from "axios";
 export const addToCart = (id, quantity) => async (dispatch, getState) => {
   const response = await axios.get("/api/products/" + id);
   dispatch({
@@ -12,7 +12,7 @@ export const addToCart = (id, quantity) => async (dispatch, getState) => {
     payload: {
       product: response.data._id,
       name: response.data.name,
-      image: response.data.image,
+      productImg: response.data.productImg,
       price: response.data.price,
       countInStock: response.data.countInStock,
       quantity,
@@ -35,7 +35,7 @@ export const deleteFromCart = (id) => (dispatch, getState) => {
 export const saveShippingAddress = (formData) => (dispatch) => {
   // data is comming from form that we fild up
   dispatch({
-    type: CART_SAVE_ADRESS,
+    type: CART_SAVE_ADDRESS,
     payload: formData,
   });
   localStorage.setItem("shippingAddress", JSON.stringify(formData));

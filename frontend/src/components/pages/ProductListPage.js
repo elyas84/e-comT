@@ -110,7 +110,10 @@ export default function ProductListPage() {
                   {products && products.length
                     ? products.map((product) => (
                         <tr key={product._id}>
-                          <td className="p-2">{product.name}</td>
+                        <Link to={"/detail/"+product._id}>
+                               <td className="p-2">{product.name}</td>
+                        </Link>
+                     
                           <td className="p-2">{product.brand}</td>
                           <td className="p-2">{product.price}</td>
                           <td className="p-2">{product.countInStock}</td>

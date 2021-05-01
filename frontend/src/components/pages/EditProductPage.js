@@ -103,7 +103,7 @@ export default function EditProductPage({ match }) {
       })
     );
 
-    console.log("img: ", image);
+    // console.log("img: ", image);
   };
   return (
     <>
@@ -216,7 +216,14 @@ export default function EditProductPage({ match }) {
                       </Form.Group>{" "}
                       <br />
                       <Form.Group>
-                        <label id="image-file"></label>
+                        <Form.Label>Image</Form.Label>
+                        <Form.Control
+                          tyep="text"
+                          value={image}
+                          onChange={(e) => {
+                            setImage(e.target.value);
+                          }}
+                        ></Form.Control>
                         <Form.File
                           id="image-file"
                           label="Upload Img"

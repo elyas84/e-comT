@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  productListDetail,
+} from "../../redux/actions/productActions";
 import {
   Container,
   Table,
@@ -10,7 +14,14 @@ import {
   Button,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-export default function ShopingCartPage() {
+export default function ShopingCartPage({ match }) {
+   const dispatch = useDispatch();
+
+    useEffect(() => {
+   
+    }, [dispatch]);
+
+
   return (
     <Container>
       <h3 className="py-5">Shoping Cart</h3>
@@ -30,12 +41,13 @@ export default function ShopingCartPage() {
             <tbody>
               <tr className="tr">
                 <td className="table_img p-0">
-                  <Link to="/detail">
-                    <Image src="images/drone1.jpg"></Image>
+                  <Link to={"/detail/" }>
+                    <Image src=""></Image>
                   </Link>
                 </td>
                 <td>
-                  <Link to="/detail">drone1</Link>
+                  {/* <Link to={"/detail/" + product._id}>{product.name}</Link> */}
+                  <Link to={"/detail/" }>tyut</Link>
                 </td>
                 <td className="p-0">
                   <Form.Control as="select" custom>
@@ -46,7 +58,7 @@ export default function ShopingCartPage() {
                     <option>5</option>
                   </Form.Control>
                 </td>
-                <td>$123.00</td>
+                <td>89</td>
                 <td>$246.00</td>
                 <td>
                   <Link to="#">

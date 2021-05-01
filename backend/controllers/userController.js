@@ -113,37 +113,15 @@ exports.login = async (req, res) => {
   }
 };
 
-// @desc GET user based on the id IS NOT PROFLE
-// @route /api/users:id
-// @access proteced && Admin
-
-// exports.getUser = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id).select("-password -__v");
-//     if (!user) {
-//       return res.status(404).json({
-//         message: user.name + "is not exist!",
-//       });
-//     }
-
-//     res.status(200).json(user);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).json({
-//       message: error,
-//     });
-//   }
-// };
-
-// @desc GET Profile
-// @route /api/users
+// @desc GET user profile
+// @route /api/users/profile
 // @access proteced || Admin
-
 exports.profile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id); // commes from Token
     if (!user) {
       return res.status(404).json({
+        success: false,
         message: "No user found!",
       });
     }
@@ -151,9 +129,6 @@ exports.profile = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      profilePic: user.profilePic,
-      backgroundPic: user.backgroundPic,
-      created: user.created,
       isAdmin: user.isAdmin,
     });
   } catch (error) {
@@ -170,10 +145,10 @@ exports.profile = async (req, res) => {
 
 exports.profileUpdate = async (req, res) => {
   try {
-    // const { name, email, password, isAdmin } = req.body;
+
     const user = await User.findById(req.user._id); //logged in user!!
 
-    console.log("user: ", req.user._id);
+    // console.log("user: ", req.user._id);
     if (!user) {
       return res.status(404).json({
         message: "No user found!",

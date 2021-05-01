@@ -28,6 +28,10 @@ import CustomerOrderDetailsPage from "./components/pages/CustomerOrderDetailsPag
 import CustomersOrderListPage from "./components/pages/CustomersOrderListPage";
 import AdminAccountPage from "./components/pages/AdminAccountPage";
 import ScrollSolution from './components/layout/ScrollSolution'
+import SearchPage from "./components/pages/SearchPage";
+import CartPage from "./components/pages/CartPage";
+
+import OrderPage from "./components/pages/OrderPage";
 export default function App() {
   return (
     <Router>
@@ -37,10 +41,11 @@ export default function App() {
         <main>
           <Switch>
             <Route exact path="/" component={HomePage}></Route>
+            <Route exact path="/cart/:id?" component={CartPage}></Route>
             <Route exact path="/about" component={AboutPage}></Route>
             <Route exact path="/register" component={RegisterPage}></Route>
             <Route exact path="/login" component={LoginPage}></Route>
-            <Route exact path="/cart" component={ShopingCartPage}></Route>
+            {/* <Route exact path="/cart/:id?" component={ShopingCartPage}></Route> */}
             <Route exact path="/checkout-1" component={Checkout1Page}></Route>
             <Route exact path="/checkout-2" component={Checkout2Page}></Route>
             <Route exact path="/checkout-3" component={Checkout3Page}></Route>
@@ -48,6 +53,7 @@ export default function App() {
             <Route exact path="/mobile" component={MobilePage}></Route>
             <Route exact path="/computer" component={ComputerPage}></Route>
             <Route exact path="/products" component={AllProductPage}></Route>
+            <Route exact path="/order/:id" component={OrderPage}></Route>
             <Route
               exact
               path="/detail/:id"
@@ -99,6 +105,7 @@ export default function App() {
               path="/customer-orders"
               component={CustomerOrderPage}
             ></Route>
+            <Route path="/search/:keyword" component={SearchPage}></Route>
             <Route component={ErrorPage}></Route>
           </Switch>
         </main>

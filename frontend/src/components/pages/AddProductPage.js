@@ -64,7 +64,7 @@ export default function AddProductPage() {
       });
       history.push("/admin/products-list");
     }
-  }, [userDetail, history, success, dispatch]);
+  }, [userDetail, history, success, dispatch,product]);
 
   const logoutHandler = () => {
     dispatch(logout());

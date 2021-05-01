@@ -17,16 +17,13 @@ export default function RegisterPage() {
   const [pass2, setPass2] = useState("");
   const [warnngMsg, setWarningMsg] = useState(null);
 
-
   useEffect(() => {
     if (userDetail && registerSuccess) {
-            dispatch({ type: USER_REG_REST });
+      dispatch({ type: USER_REG_REST });
       window.alert(userDetail.name + " is registered, please Login");
       history.push("/login");
-    
     }
   }, [userDetail, dispatch, registerSuccess, history]);
-
 
   const registerHandler = (e) => {
     e.preventDefault();
@@ -114,7 +111,6 @@ export default function RegisterPage() {
             </Button>
           </Form>
         </Col>
-       
       </Row>
     </Container>
   );

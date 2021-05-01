@@ -23,7 +23,7 @@ import {
 
 import axios from "axios";
 
-export const createOrder = (order) => async (dispatch, getState) => {
+export const createAnOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,

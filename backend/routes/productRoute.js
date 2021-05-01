@@ -3,7 +3,6 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 const { protected, admin } = require("../middlewares/auth");
 
-
 router
   .route("/")
   .get(productController.getProducts)
@@ -11,10 +10,7 @@ router
 router
   .route("/:id")
   .get(productController.getProduct)
-  .delete(protected, admin, productController.delete);
-
-router
-  .route("/:id/edit")
+  .delete(protected, admin, productController.delete)
   .put(protected, admin, productController.updateProduct);
 
 module.exports = router;

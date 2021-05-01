@@ -33,7 +33,7 @@ import {cartReducer}from './redux/reducers/cartReducers'
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
-  userDetail: userDetailsReducer,
+  userDetails: userDetailsReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userProfileUpdate: userUpdateProfileReducer,

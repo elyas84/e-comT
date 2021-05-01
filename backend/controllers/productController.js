@@ -91,7 +91,7 @@ exports.updateProduct = async (req, res) => {
   const {
     name,
     price,
-    image,
+    productImg,
     brand,
     category,
     countInStock,
@@ -103,7 +103,7 @@ exports.updateProduct = async (req, res) => {
     if (product) {
       (product.name = name),
         (product.price = price),
-        (product.image = image), // This path is regulare url that we can pass if we want
+        (product.productImg = productImg), // This path is regulare url that we can pass if we want
         (product.brand = brand),
         (product.category = category),
         (product.countInStock = countInStock),
@@ -116,7 +116,7 @@ exports.updateProduct = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({
       message: error,
     });

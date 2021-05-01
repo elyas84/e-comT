@@ -26,6 +26,8 @@ export const getProductList = (keyword = "") => async (dispatch) => {
       type: PRODUCT_LIST_REQUEST,
     });
     const response = await axios.get("/api/products?keyword=" + keyword);
+    // const response = await axios.get('https://fakestoreapi.com/products');
+    console.log(response)
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: response.data,
@@ -47,6 +49,7 @@ export const productListDetail = (id) => async (dispatch) => {
       type: PRODUCT_DETAILS_REQUEST,
     });
     const response = await axios.get("/api/products/" + id);
+    // const response = await axios.get("https://fakestoreapi.com/products/"+id);
     dispatch({
       type: PRODUCT_DEATAILS_SUCCESS,
       payload: response.data,

@@ -22,7 +22,7 @@ import {
   USER_PROFILE_UPDATE_REST,
 } from "../constences/userConstence";
 
-export const userLoginReducer = (state =  {} , action) => {
+export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return {
@@ -33,6 +33,7 @@ export const userLoginReducer = (state =  {} , action) => {
       return {
         loading: false,
         userDetail: action.payload,
+        loginSuccess: true,
       };
 
     case USER_LOGIN_FAIL:
@@ -70,7 +71,6 @@ export const userRegisterReducer = (state = {}, action) => {
       };
     case USER_REG_REST:
       return {
-  
         userDetail: {},
         registerSuccess: false,
       };
@@ -84,13 +84,14 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case USER_DETAILS_REQUEST:
       return {
+        ...state,
         loading: true,
       };
 
     case USER_DETAILS_SUCCESS:
       return {
         loading: false,
-        // user: console.log("user: ", action.payload),
+
         user: action.payload,
       };
 
@@ -108,6 +109,7 @@ export const userListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USER_LIST_REQUEST:
       return {
+        ...state,
         loading: true,
       };
 
@@ -130,19 +132,17 @@ export const userListReducer = (state = { users: [] }, action) => {
   }
 };
 
-
 export const userUpdateProfileReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_PROFILE_UPDATE_REQUEST:
       return {
-        ...state,
         loading: true,
       };
 
     case USER_PROFILE_UPDATE_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        userDetail: action.payload,
         updateSuccess: true,
       };
     case USER_PROFILE_UPDATE_FAIL:
@@ -167,7 +167,7 @@ export const userDeleteReducer = (state = {}, action) => {
     case USER_DELETE_SUCCESS:
       return {
         loading: false,
-        success: true,
+        DeleteSsuccess: true,
       };
     case USER_DELETE_FAIL:
       return {

@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Col, Container, Row, ListGroup, Table } from "react-bootstrap";
+import { Col, Container, Row, ListGroup, Table, Modal,Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, getUsers } from "../../redux/actions/userActions";
+import { logout, getUsers, deleteUser } from "../../redux/actions/userActions";
 import Loader from "../layout/Loader";
 import Message from "../layout/Message";
 export default function CustomerListPage() {
@@ -14,6 +14,9 @@ export default function CustomerListPage() {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
   console.log("users: ", users);
+  
+  const userDelete = useSelector((state) => state.userDelete);
+  const { DeleteSsuccess } = userDelete;
 
   useEffect(() => {
     if (!userDetail.isAdmin) {
@@ -21,12 +24,18 @@ export default function CustomerListPage() {
     } else {
       dispatch(getUsers());
     }
-  }, [userDetail, history, dispatch]);
+  }, [userDetail, history, dispatch, DeleteSsuccess]);
 
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
   };
+
+   const [show, setShow] = useState(false);
+
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
+   const [targetUser, setTargetUser] = useState("");
   return (
     <Container>
       <Row className="">
@@ -82,23 +91,53 @@ export default function CustomerListPage() {
                 <tbody>
                   {loading && <Loader />}
                   {error && <Message>{error}</Message>}
-                  {users && users.length ? (
-                    users.map((user,index) =>
-                      user.isAdmin ? null : (
-                        <tr key={user._id}>
-                          <td className="p-2">{index}</td>
-                          <td className="p-2">{user.name}</td>
-                          <td className="p-2">{user.email}</td>
-                          <td className="p-2">+45678787987</td>
-                          <td className="p-0 text-center">
-                            <i className="fas fa-trash "></i>
-                          </td>
-                        </tr>
+                  {users && users.length
+                    ? users.map((user, index) =>
+                        user.isAdmin ? null : (
+                          <tr key={user._id}>
+                            <td className="p-2">{index}</td>
+                            <td className="p-2">{user.name}</td>
+                            <td className="p-2">{user.email}</td>
+                            <td className="p-2">+45678787987</td>
+                            <td className="p-0 text-center">
+                              <i
+                                className="fas fa-trash"
+                                style={{ cursor: "pointer", color: "red" }}
+                                onClick={() => {
+                                  setTargetUser(user);
+                                  handleShow();
+                                }}
+                              ></i>
+                              <Modal show={show} onHide={handleClose}>
+                                <Modal.Header closeButton>
+                                  <Modal.Title>Delete User</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                  <p style={{ color: "red" }}>
+                                    Are you sure to delete {targetUser.name} ?{" "}
+                                  </p>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                  <Button variant="light" onClick={handleClose}>
+                                    Close
+                                  </Button>
+                                  <Button
+                                    variant="outline-danger"
+                                    onClick={() => {
+                                      dispatch(deleteUser(targetUser._id));
+
+                                      setShow(false);
+                                    }}
+                                  >
+                                    Ok
+                                  </Button>
+                                </Modal.Footer>
+                              </Modal>
+                            </td>
+                          </tr>
+                        )
                       )
-                    )
-                  ) : (
-                    null
-                  )}
+                    : null}
                 </tbody>
               </Table>
             </Col>

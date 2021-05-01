@@ -10,77 +10,55 @@ import {
   Button,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getProductList,
-} from "../../redux/actions/productActions";
+import { getProductList } from "../../redux/actions/productActions";
 import Loader from "../layout/Loader";
 import Message from "../layout/Message";
 import Product from "../layout/Product";
 export default function AllProductPage() {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { loading, products, error } = productList;
+  console.log("products: ",products)
 
-       const productList = useSelector((state) => state.productList);
-       const { loading, products, error } = productList;
 
-       useEffect(() => {
-         dispatch(getProductList());
-       }, [dispatch]);
+const [visible, setVisible] = useState(3);
 
+  useEffect(() => {
+    dispatch(getProductList());
+
+  }, [dispatch]);
+
+const loadMore = ()=>{
+setVisible((prevValue)=>prevValue+4)
+}
   return (
     <>
       <Container>
+        <h2 className="text-center py-5"> Products</h2>
         <Row className="p-3">
-          <Col lg={3}>
-            <Card>
-              <Card.Header>All Products</Card.Header>
-              <ListGroup variant="flush">
-                <p className="p-2">
-                  Hp{" "}
-                  <Badge pill variant="info">
-                    10
-                  </Badge>
-                </p>
-
-                <ListGroup.Item>
-                  <Link to="/detail">Hp Pavillion</Link>
-                </ListGroup.Item>
-              </ListGroup>
-
-              <ListGroup variant="flush">
-                <p className="p-2">
-                  MacBook{" "}
-                  <Badge pill variant="info">
-                    5
-                  </Badge>
-                </p>
-                <ListGroup.Item>
-                  <Link to="/detail">Macbook pro</Link>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </Col>
-          <Col lg={8}>
-            {loading ? (
-              <Loader />
-            ) : error ? (
-              <Message variant="danger">{error}</Message>
-            ) : (
-              <Row className="mt-5">
-                {products
-                  .map((product) => (
-                    <Col sm={12} md={6} lg={3} key={product._id}>
-                      <Product product={product} />
-                    </Col>
-                  ))
-                  .slice(0, 4)}
-              </Row>
-            )}
-            <Row className="mt-5">
-              <Col lg={12}>
-                <Button variant="info">Load more</Button>
-              </Col>
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <Row>
+              {products.slice(0, visible).map((product) => (
+                <Col lg={4} md={6} sm={12} key={product._id}>
+                  <Product product={product} />
+                </Col>
+              ))}
             </Row>
+          )}
+        </Row>
+        <Row className="mt-5">
+          <Col lg={12}>
+            <Button
+              variant="primary"
+              onClick={loadMore}
+            >
+              Load more
+            </Button>
           </Col>
         </Row>
       </Container>
