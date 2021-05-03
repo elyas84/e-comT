@@ -10,28 +10,26 @@ import MobilePage from "./components/pages/MobilePage";
 import ComputerPage from "./components/pages/ComputerPage";
 import AllProductPage from "./components/pages/AllProductPage";
 import ProductDetailPage from "./components/pages/ProductDetailPage";
-import ShopingCartPage from "./components/pages/ShopingCartPage";
-import Checkout1Page from "./components/pages/Checkout1Page";
 import ProfilePage from "./components/pages/ProfilePage";
 import CustomerAccountPage from "./components/pages/CustomerAccountPage";
 import CustomerOrderPage from "./components/pages/CustomerOrderPage";
 import CustomerListPage from "./components/pages/CustomerListPage";
-import Checkout2Page from "./components/pages/Checkout2Page";
-import Checkout3Page from "./components/pages/Checkout3Page";
 import AboutPage from "./components/pages/AboutPage";
 import ErrorPage from "./components/pages/ErrorPage";
 import LoginPage from "./components/pages/LoginPage";
 import ProductListPage from "./components/pages/ProductListPage";
 import AddProductPage from "./components/pages/AddProductPage";
 import EditProductPage from "./components/pages/EditProductPage";
-import CustomerOrderDetailsPage from "./components/pages/CustomerOrderDetailsPage";
 import CustomersOrderListPage from "./components/pages/CustomersOrderListPage";
 import AdminAccountPage from "./components/pages/AdminAccountPage";
 import ScrollSolution from './components/layout/ScrollSolution'
 import SearchPage from "./components/pages/SearchPage";
 import CartPage from "./components/pages/CartPage";
-
 import OrderPage from "./components/pages/OrderPage";
+import PaymentPage from "./components/pages/PaymentPage";
+import PlaceOrderPage from "./components/pages/PlaceOrderPage";
+import ShippingPage from "./components/pages/ShippingPage";
+import OrderReviewPage from "./components/pages/OrderReviewPage";
 export default function App() {
   return (
     <Router>
@@ -45,25 +43,22 @@ export default function App() {
             <Route exact path="/about" component={AboutPage}></Route>
             <Route exact path="/register" component={RegisterPage}></Route>
             <Route exact path="/login" component={LoginPage}></Route>
-            {/* <Route exact path="/cart/:id?" component={ShopingCartPage}></Route> */}
-            <Route exact path="/checkout-1" component={Checkout1Page}></Route>
-            <Route exact path="/checkout-2" component={Checkout2Page}></Route>
-            <Route exact path="/checkout-3" component={Checkout3Page}></Route>
+            <Route exact path="/order/:id" component={OrderPage}></Route>
+            <Route exact path="/order-review/:id" component={OrderReviewPage}></Route>
+            <Route exact path="/payment" component={PaymentPage}></Route>
+            <Route exact path="/placeorder" component={PlaceOrderPage}></Route>
+            <Route exact path="/shipping" component={ShippingPage}></Route>
             <Route exact path="/contact" component={ContactPage}></Route>
             <Route exact path="/mobile" component={MobilePage}></Route>
             <Route exact path="/computer" component={ComputerPage}></Route>
             <Route exact path="/products" component={AllProductPage}></Route>
-            <Route exact path="/order/:id" component={OrderPage}></Route>
+
             <Route
               exact
               path="/detail/:id"
               component={ProductDetailPage}
             ></Route>
-            <Route
-              exact
-              path="/order-details"
-              component={CustomerOrderDetailsPage}
-            ></Route>
+
             <Route
               exact
               path="/admin/new-product"

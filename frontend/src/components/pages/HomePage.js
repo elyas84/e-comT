@@ -119,7 +119,7 @@ export default function HomePage() {
                   <Product product={product} />
                 </Col>
               ))
-              .slice(0, 4)}
+              .slice(0, Math.floor(Math.random() * 4 + 1))}
           </Row>
         )}
       </Container>

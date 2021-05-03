@@ -1,24 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  Row,
+  ListGroup,
+  Table,
+  Badge,
+  Modal,
+  Button,
+} from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
+import Message from "../layout/Message";
+import Loader from "../layout/Loader";
+import {
+  getOrderList,
+  deliverid,
+  deleteOrder,
+ 
+} from "../../redux/actions/orderActions";
 export default function CustomersOrderListPage() {
+
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetail } = userLogin;
 
+  const ordersList = useSelector((state) => state.ordersList);
+  const { orderlist, loading, error } = ordersList;
+
+   const orderDelete = useSelector((state) => state.orderDelete);
+   const { deleteSuccess } = orderDelete;
+
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const { updateSuccess } = orderDeliver;
+  console.log("orderlist: ", orderlist);
   useEffect(() => {
-    if (!userDetail.name) {
+    if (!userDetail.isAdmin) {
       history.push("/");
+    } else {
+      dispatch(getOrderList());
     }
-  }, [userDetail, history]);
+  }, [userDetail, history, dispatch, updateSuccess, deleteSuccess]);
 
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
   };
+
+
+   const [show, setShow] = useState(false);
+
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
+   const [targetOrder, setTargetOrder] = useState("");
+ 
   return (
     <Container>
       {userDetail.isAdmin ? (
@@ -40,9 +77,7 @@ export default function CustomersOrderListPage() {
               <Link to="/admin/new-product">
                 <ListGroup.Item as="li">New Product</ListGroup.Item>
               </Link>
-              {/* <Link to="/admin/edit-product">
-                <ListGroup.Item as="li">Edit Product</ListGroup.Item>
-              </Link> */}
+
               <Link to="/admin/account">
                 <ListGroup.Item as="li">My account</ListGroup.Item>
               </Link>
@@ -66,26 +101,91 @@ export default function CustomersOrderListPage() {
                   <thead>
                     <tr>
                       <th className="p-2">Order</th>
+
                       <th className="p-2">Customer</th>
                       <th className="p-2">Total</th>
                       <th className="p-2">Paid</th>
                       <th className="p-2">delivered</th>
+                      <th className="p-2">Delete order</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-2">154564878979</td>
-                      <td className="p-2">John</td>
-                      <td className="p-2">$ 150.00</td>
-                      <td className="p-2">
-                        <Badge variant="info">Ok</Badge>
-                      </td>
-                      <td className="p-0">
-                        <Link to="/customer-order">
-                          <Badge variant="danger">No</Badge>
-                        </Link>
-                      </td>
-                    </tr>
+                    {loading && <Loader></Loader>}
+                    {error && <Message>{error}</Message>}
+                    {orderlist && orderlist.length ? (
+                      orderlist.map((order) => (
+                        <tr key={order._id}>
+                          <Link to={"/order-review/"+order._id}>
+   <td className="p-2">{order.orderItems[0]._id}</td>
+
+                          </Link>
+                       
+
+                          <td className="p-2">{order.costumer.name}</td>
+                          <td className="p-2">$ {order.totalPrice}</td>
+                          {order.isPaid === true ? (
+                            <td className="p-2">
+                              <Badge variant="info">Ok</Badge>
+                            </td>
+                          ) : (
+                            <td className="p-2">
+                              <Badge variant="danger">No</Badge>
+                            </td>
+                          )}
+                          {order.isDelivered === true ? (
+                            <td className="p-2">
+                              <Badge variant="success">Delivered</Badge>
+                            </td>
+                          ) : (
+                            <td
+                              className="p-2 text-center"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                dispatch(deliverid(order._id));
+                              }}
+                            >
+                              <Badge variant="info">Processing</Badge>
+                            </td>
+                          )}
+
+                          <i
+                            className="fas fa-trash"
+                            style={{ cursor: "pointer", color: "red" }}
+                            onClick={() => {
+                              setTargetOrder(order);
+                              handleShow();
+                            }}
+                          ></i>
+                          <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                              <Modal.Title>Delete Order</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                              <p style={{ color: "red" }}>
+                                Are you sure to delete the ORDER ?{" "}
+                              </p>
+                            </Modal.Body>
+                            <Modal.Footer>
+                              <Button variant="light" onClick={handleClose}>
+                                Close
+                              </Button>
+                              <Button
+                                variant="outline-danger"
+                                onClick={() => {
+                                  dispatch(deleteOrder(targetOrder._id));
+
+                                  setShow(false);
+                                }}
+                              >
+                                Ok
+                              </Button>
+                            </Modal.Footer>
+                          </Modal>
+                        </tr>
+                      ))
+                    ) : (
+                      <Message>There no orders.</Message>
+                    )}
                   </tbody>
                 </Table>
               </Col>

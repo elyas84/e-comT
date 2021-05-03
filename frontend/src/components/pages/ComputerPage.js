@@ -5,12 +5,8 @@ import {
   Col,
   Container,
   Row,
-  Card,
-  ListGroup,
-  Badge,
   Button,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import Loader from "../layout/Loader";
 import Message from "../layout/Message";
 import Product from "../layout/Product";
@@ -19,7 +15,7 @@ export default function ComputerPage() {
 
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
-const [visible, setVisible] = useState(3);
+  const [visible, setVisible] = useState(3);
   useEffect(() => {
     dispatch(getProductList());
   }, [dispatch]);
@@ -27,6 +23,7 @@ const [visible, setVisible] = useState(3);
   const loadMore = () => {
     setVisible((prevValue) => prevValue + 3);
   };
+
   return (
     <>
       <Container>
@@ -81,7 +78,7 @@ const [visible, setVisible] = useState(3);
                   );
                 }
               })
-              .slice(0, 4)}
+              .slice(0, Math.floor(Math.random() * 4+1))}
           </Row>
         )}
       </Container>

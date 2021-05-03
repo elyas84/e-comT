@@ -3,17 +3,31 @@ import { Col, Container, Row, ListGroup, Table, Badge } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
+import { getMyOrderList, getOrderList } from "../../redux/actions/orderActions";
+import Message from "../layout/Message";
+import Loader from "../layout/Loader";
 export default function ProfilePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetail } = userLogin;
 
+  const userOrderList = useSelector((state) => state.userOrderList);
+  const { Myorders, loading, error } = userOrderList;
+  // console.log(Myorders)
   useEffect(() => {
     if (!userDetail.name) {
       history.push("/");
     }
-  }, [userDetail, history]);
+    dispatch(getMyOrderList());
+  }, [userDetail, history, dispatch]);
+
+    // useEffect(() => {
+    //   if (!userDetail.isAdmin) {
+    //     history.push("/");
+    //   }
+    //   dispatch(getOrderList());
+    // }, [userDetail, history, dispatch]);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -58,36 +72,15 @@ export default function ProfilePage() {
               <Col lg={12}>
                 <Row>
                   <Col>
-                    <h2>Latest Order</h2>
+                    <h2>Admin Dashboard</h2>
                   </Col>
                 </Row>
 
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th>Order</th>
-                      <th>Customer</th>
-                      <th>Total</th>
-                      <th>Paid</th>
-                      <th>delivered</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="p-1">154564878979</td>
-                      <td className="p-1">John</td>
-                      <td className="p-1">$ 150.00</td>
-                      <td className="p-1">
-                        <Badge variant="info">Ok</Badge>
-                      </td>
-                      <td className="p-0">
-                        <Link to="/customer-order">
-                          <Badge variant="danger">No</Badge>
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
+<hr/>
+<h4>As an Admin, you can manage the orders and deliver staff</h4>
+<h4>As an Admin, you can Delete, update your client's order</h4>
+
+              
               </Col>
               <Col></Col>
             </Row>
@@ -104,9 +97,6 @@ export default function ProfilePage() {
                 <ListGroup.Item as="li">My orders</ListGroup.Item>
               </Link>
 
-              <Link to="/order-details">
-                <ListGroup.Item as="li">Order Details</ListGroup.Item>
-              </Link>
               <Link to="/customer-account">
                 <ListGroup.Item as="li">My account</ListGroup.Item>
               </Link>
@@ -131,32 +121,54 @@ export default function ProfilePage() {
                     </span>
                   </Col>
                 </Row>
-                <hr />
 
                 <Table striped bordered hover responsive>
                   <thead>
                     <tr>
-                      <th>Order</th>
-                      <th>Date</th>
+                      <th>Name</th>
+                      <th>Paid</th>
                       <th>Total</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-1">154564878979</td>
-                      <td className="p-1">22/06/2013</td>
-                      <td className="p-1">$ 150.00</td>
-                      <td className="p-1">
-                        <Badge variant="info">on hold</Badge>
-                      </td>
-                      <td className="p-0">
-                        <Link to="/customer-order">
-                          <Badge variant="success">view</Badge>
-                        </Link>
-                      </td>
-                    </tr>
+                    {loading && <Loader />}
+                    {error && <Message>{error}</Message>}
+                    {Myorders && Myorders.length
+                      ? Myorders.map((myorder) => (
+                          <tr key={myorder._id}>
+                            <td className="p-1">
+                              {myorder.orderItems[0].name}
+                            </td>
+                            {myorder.isPaid ? (
+                              <td className="p-1">
+                                <Badge variant="success">Ok</Badge>
+                              </td>
+                            ) : (
+                              <td className="p-1">
+                                <Badge variant="danger">No</Badge>
+                              </td>
+                            )}
+
+                            <td className="p-1">$ {myorder.totalPrice}</td>
+                            <td className="p-1">
+                              {myorder.isDelivered === false ? (
+                                <Badge variant="info">processing</Badge>
+                              ) : (
+                                <Badge variant="info">
+                                  {myorder.paymentResult.status}
+                                </Badge>
+                              )}
+                            </td>
+                            <td className="p-0">
+                              <Link to={"/order-review/" + myorder._id}>
+                                <Badge variant="success">view</Badge>
+                              </Link>
+                            </td>
+                          </tr>
+                        ))[Myorders.length - 1]
+                      : null}
                   </tbody>
                 </Table>
               </Col>

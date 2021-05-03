@@ -3,11 +3,10 @@ import {
   CART_REMOVE_ITEM,
   CART_SAVE_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
-  // CLEAN_CART,EX
 } from "../constences/cartConstence";
 
 export const cartReducer = (
-  state = { cartItems: [], shippingAddress: {}, paymentMethod: {} },
+  state = { cartItems: [], shippingAddress: {}, paymentMethod :{}},
   action
 ) => {
   switch (action.type) {

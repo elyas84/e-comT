@@ -19,6 +19,12 @@ import {
   ORDER_MY_LIST_REQUEST,
   ORDER_MY_LIST_SUCCSESS,
   ORDER_MY_LIST_FAIL,
+  CART_REST,
+  ORDER_MY_LIST_REST,
+  ORDER_DELIVERIED_UPDATE_REQUEST,
+  ORDER_DELIVERIED_UPDATE_SUCCESS,
+  ORDER_DELIVERIED_UPDATE_FAIL,
+  ORDER_DELIVERIED_UPDATE_RESET,
 } from "../constences/orderConstence";
 
 
@@ -102,7 +108,10 @@ export const OrderMyListReducer = (
         loading: false, 
         error: action.payload,
       };
-
+      
+      case ORDER_MY_LIST_REST :{
+        return { Myorders :[]};
+      }
     default:
       return state;
   }
@@ -126,6 +135,9 @@ export const OrderPaysReducer = (state = {}, action) => {
         loading: false, 
         error: action.payload,
       };
+      case CART_REST: {
+        return {}
+      }
 
     case ORDER_PAY_REST:
       return {};
@@ -171,13 +183,37 @@ export const OrderListDeleteReducer = (state = {}, action) => {
     case ORDER_LIST_DELETE_SUCCSESS:
       return {
         loading: false, 
-        success: true,
+        deleteSuccess: true,
       };
     case ORDER_LIST_DELETE_FAIL:
       return {
         loading: false,
         error: action.payload,
       };
+    default:
+      return state;
+  }
+};
+
+export const deliveridReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DELIVERIED_UPDATE_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_DELIVERIED_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        updateSuccess: true,
+      };
+    case ORDER_DELIVERIED_UPDATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case ORDER_DELIVERIED_UPDATE_RESET:
+      return {};
     default:
       return state;
   }

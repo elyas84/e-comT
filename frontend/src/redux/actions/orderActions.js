@@ -19,11 +19,17 @@ import {
   ORDER_MY_LIST_REQUEST,
   ORDER_MY_LIST_SUCCSESS,
   ORDER_MY_LIST_FAIL,
+  CART_REST,
+  ORDER_DELIVERIED_UPDATE_REQUEST,
+  ORDER_DELIVERIED_UPDATE_SUCCESS,
+  ORDER_DELIVERIED_UPDATE_FAIL,
+  ORDER_DELIVERIED_UPDATE_RESET,
 } from "../constences/orderConstence";
 
 import axios from "axios";
 
 export const createAnOrder = (order) => async (dispatch, getState) => {
+  // console.log("order: ", order);
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -131,6 +137,7 @@ export const orderPaid = (orderId, paymentResult) => async (
   }
 };
 
+
 export const getOrderList = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -196,7 +203,7 @@ export const getMyOrderList = () => async (dispatch, getState) => {
   }
 };
 
-export const deleteOrderList = (id) => async (dispatch, getState) => {
+export const deleteOrder = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_LIST_DELETE_REQUEST,
@@ -219,6 +226,53 @@ export const deleteOrderList = (id) => async (dispatch, getState) => {
     dispatch({
       type: ORDER_LIST_DELETE_FAIL,
 
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const orderEmpty = () => (dispatch) => {
+  localStorage.removeItem("cartItems");
+  dispatch({
+    type: CART_REST,
+  });
+};
+
+
+export const deliverid = (orderId) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DELIVERIED_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userDetail },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json", // we do not need this
+        // becouse, we are sending GET requset!
+        Authorization: "Bearer " + userDetail.token,
+      },
+    };
+
+    const response = await axios.put(
+      "/api/orders/" + orderId + "/delivered",
+      {},
+      config
+    );
+
+    // console.log("res: ", res);
+    dispatch({
+      type: ORDER_DELIVERIED_UPDATE_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_DELIVERIED_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -28,7 +28,8 @@ export default function CartPage({ match, location }) {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  console.log("cartItems", cartItems);
+
+  // console.log("cartItems", cartItems);
   useEffect(() => {
     if (product_ID) {
       dispatch(addToCart(product_ID, quantity));
@@ -36,7 +37,7 @@ export default function CartPage({ match, location }) {
   }, [dispatch, product_ID, quantity]);
 
   const checkoutHandler = () => {
-    history.push("/checkout-1");
+    history.push("/shipping");
 
     // if user not logged in, user can redirected login page or shipping page!
   };
@@ -129,8 +130,8 @@ export default function CartPage({ match, location }) {
                 </ListGroupItem>
               ))}
             </ListGroup>
-          ) : (
-            <Message variant="info">Your cart is empty</Message>
+          )  : (
+            <Message>Your cart is empty</Message>
           )}
         </Col>
 

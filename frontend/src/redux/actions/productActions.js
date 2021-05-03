@@ -27,7 +27,7 @@ export const getProductList = (keyword = "") => async (dispatch) => {
     });
     const response = await axios.get("/api/products?keyword=" + keyword);
     // const response = await axios.get('https://fakestoreapi.com/products');
-    console.log(response)
+    // console.log(response)
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: response.data,

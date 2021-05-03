@@ -12,5 +12,5 @@ router
   .delete(protected, orderController.delete);
 
 router.route("/:id/paid").put(protected, orderController.updateOrderToPaid);
-
+router.route("/:id/delivered").put(protected, orderController.updateOrderToDelivered);
 module.exports = router;

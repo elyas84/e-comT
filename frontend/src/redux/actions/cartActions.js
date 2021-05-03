@@ -32,19 +32,19 @@ export const deleteFromCart = (id) => (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
-export const saveShippingAddress = (formData) => (dispatch) => {
+export const saveShippingAddress = (data) => (dispatch) => {
   // data is comming from form that we fild up
   dispatch({
     type: CART_SAVE_ADDRESS,
-    payload: formData,
+    payload: data,
   });
-  localStorage.setItem("shippingAddress", JSON.stringify(formData));
+  localStorage.setItem("shippingAddress", JSON.stringify(data));
 };
 
-export const savePaymentMethod = (formData) => (dispatch) => {
+export const savePaymentMethod = (data) => (dispatch) => {
   dispatch({
     type: CART_SAVE_PAYMENT_METHOD,
-    payload: formData,
+    payload: data,
   });
-  localStorage.setItem("paymentMethod", JSON.stringify(formData));
+  localStorage.setItem("paymentMethod", JSON.stringify(data));
 };

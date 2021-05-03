@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Col,
   Container,
   Row,
-  Card,
-  ListGroup,
-  Badge,
   Button,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +15,7 @@ export default function AllProductPage() {
 
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
-  console.log("products: ",products)
+  // console.log("products: ",products)
 
 
 const [visible, setVisible] = useState(3);
@@ -30,7 +26,7 @@ const [visible, setVisible] = useState(3);
   }, [dispatch]);
 
 const loadMore = ()=>{
-setVisible((prevValue)=>prevValue+4)
+setVisible((prevValue)=>prevValue+3)
 }
   return (
     <>
@@ -51,10 +47,10 @@ setVisible((prevValue)=>prevValue+4)
             </Row>
           )}
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-5 text-center">
           <Col lg={12}>
             <Button
-              variant="primary"
+              variant="outline-primary"
               onClick={loadMore}
             >
               Load more

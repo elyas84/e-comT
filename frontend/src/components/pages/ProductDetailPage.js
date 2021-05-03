@@ -11,13 +11,12 @@ import {
   Row,
   Image,
   Button,
-  Card,
   ListGroupItem,
   Form,
 } from "react-bootstrap";
 import Message from "../layout/Message";
 import Loader from "../layout/Loader";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function ProductDetailPage({ match }) {
   const history = useHistory();
@@ -30,13 +29,14 @@ export default function ProductDetailPage({ match }) {
   useEffect(() => {
     dispatch(productListDetail(Product_ID));
   }, [match, dispatch, Product_ID]);
+
   const [qyt, setQty] = useState(1);
   useEffect(() => {
     dispatch(getProductList());
   }, [dispatch]);
 
   const addToCartHandler = () => {
-    history.push("/cart/" + match.params.id + "?quantity=" + qyt);
+    history.push("/cart/" + Product_ID + "?quantity=" + qyt);
   };
 
   return (
@@ -65,8 +65,8 @@ export default function ProductDetailPage({ match }) {
                     {product.countInStock > 0 ? "available" : "Unavailable"}
                   </Col>
                 </Row>
-              </ListGroupItem> 
-             {product.countInStock > 0 && (
+              </ListGroupItem>
+              {product.countInStock > 0 && (
                 <ListGroupItem>
                   <Row>
                     <Col>Quanity</Col>
@@ -74,13 +74,12 @@ export default function ProductDetailPage({ match }) {
                       <Form.Control
                         as="select"
                         value={qyt}
-                        
                         onChange={(e) => {
                           setQty(e.target.value);
                         }}
                       >
                         {[...Array(product.countInStock).keys()].map((item) => (
-                          <option key={item + 1} value={item + 1} >
+                          <option key={item + 1} value={item + 1}>
                             {item + 1}
                           </option>
                         ))}
@@ -88,7 +87,7 @@ export default function ProductDetailPage({ match }) {
                     </Col>
                   </Row>
                 </ListGroupItem>
-              )} 
+              )}
               <h4 className="mt-3 mb-3">$ {product.price}</h4>
 
               <Row>
@@ -120,12 +119,16 @@ export default function ProductDetailPage({ match }) {
         ) : (
           <Row className="mt-5">
             {products
-              .map((product) => (
-                <Col sm={12} md={6} lg={3} key={product._id}>
-                  <Product product={product} />
-                </Col>
-              ))
-              .slice(0, 4)}
+              .map((product) => {
+                if (product.category === "mobile") {
+                  return (
+                    <Col sm={12} md={6} lg={3} key={product._id}>
+                      <Product product={product} />
+                    </Col>
+                  );
+                }
+              })
+              .slice(0, Math.floor(Math.random() * 4+1))}
           </Row>
         )}
       </Container>

@@ -15,7 +15,7 @@ const oderSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-      image: {
+      productImg: {
         type: String,
         required: true,
       },
@@ -26,10 +26,6 @@ const oderSchema = new mongoose.Schema({
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
-        required: true,
-      },
-      Total: {
-        type: Number,
         required: true,
       },
     },
@@ -43,14 +39,10 @@ const oderSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-    post: {
+    email: {
       type: String,
-      required: true,
     },
     name: {
-      type: String,
-    },
-    email: {
       type: String,
     },
   },
@@ -72,13 +64,24 @@ const oderSchema = new mongoose.Schema({
       type: String,
     },
   },
+  totalPrice: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
 
   isPaid: {
     type: Boolean,
     default: false,
     required: true,
   },
+  isDelivered: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   paidAt: { type: Date },
+  DeliverdAt: { type: Date },
 });
 
 module.exports = mongoose.model("Order", oderSchema);

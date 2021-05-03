@@ -80,9 +80,9 @@ export default function CustomerAccountPage() {
               <ListGroup.Item as="li">My orders</ListGroup.Item>
             </Link>
 
-            <Link to="/order-details">
+            {/* <Link to="/order-details">
               <ListGroup.Item as="li">Order Details</ListGroup.Item>
-            </Link>
+            </Link> */}
             <Link to="/customer-account">
               <ListGroup.Item as="li">My account</ListGroup.Item>
             </Link>

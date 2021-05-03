@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  Nav,
-  Navbar,
-  // FormControl,
-  // Form,
-  Container,
-  Badge,
-} from "react-bootstrap";
+import React from "react";
+import { Nav, Navbar, Container, Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import Search from "../layout/Search";
@@ -19,9 +12,16 @@ export default function Header() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userDetail } = userLogin;
 
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
+  const orderDetail = useSelector((state) => state.orderDetail);
+  const { order } = orderDetail;
+
   // const producutDetail = useSelector((state) => state.producutDetail);
   // const { product } = producutDetail;
   // console.log(product);
+
   const logoutHandler = () => {
     dispatch(logout());
   };
@@ -102,9 +102,18 @@ export default function Header() {
             <Link to="/cart">
               <i
                 className="fas fa-shopping-cart"
-                style={{ fontSize: "2rem" }}
-              ></i>{" "}
-              {/* <Badge variant="info">5</Badge> */}
+                style={{ fontSize: "1rem" }}
+              ></i>
+              {order && order.isPaid ? (
+                <Badge pill variant="success">
+                  OK
+                </Badge>
+              ) : (
+                <Badge variant="info" style={{ fontSize: "1rem" }}>
+                  {" "}
+                  {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                </Badge>
+              )}
             </Link>
           </Navbar.Collapse>
         </Container>

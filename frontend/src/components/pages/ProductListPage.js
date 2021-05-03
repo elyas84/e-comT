@@ -94,6 +94,7 @@ export default function ProductListPage() {
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
+                    <th className="p-2">#</th>
                     <th className="p-2">Name</th>
                     <th className="p-2">brand</th>
                     <th className="p-2">price</th>
@@ -108,12 +109,13 @@ export default function ProductListPage() {
                   {error && <Message>{error}</Message>}
 
                   {products && products.length
-                    ? products.map((product) => (
+                    ? products.map((product, index) => (
                         <tr key={product._id}>
-                        <Link to={"/detail/"+product._id}>
-                               <td className="p-2">{product.name}</td>
-                        </Link>
-                     
+                          <td className="p-2">{index + 1}</td>
+                          <Link to={"/detail/" + product._id}>
+                            <td className="p-2">{product.name}</td>
+                          </Link>
+
                           <td className="p-2">{product.brand}</td>
                           <td className="p-2">{product.price}</td>
                           <td className="p-2">{product.countInStock}</td>

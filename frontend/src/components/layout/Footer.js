@@ -2,6 +2,11 @@ import React from "react";
 import { Col, Container, Row,Form ,Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
 export default function Footer() {
+
+  const mailHandler = (e)=> {
+    e.preventDefault();
+    window.alert("Subscribe feature is not implemented yet. Please try later.")
+  }
   return (
     <footer className="mt-5">
       <Container className="py-5">
@@ -46,12 +51,12 @@ export default function Footer() {
               dolorem!
             </p>
             <hr />
-            <Form>
+            <Form onSubmit={mailHandler}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" />
               </Form.Group>
-              <Button variant="primary" type="submit" block>
+              <Button variant="primary" type="submit" block >
                 Subscribe
               </Button>
             </Form>

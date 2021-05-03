@@ -25,10 +25,11 @@ main {
 }
 
 /****** Card ********/
-.homeCard {
+.imgHolder {
   height: 25vh;
+  padding: 15px;
 }
-.homeCard .card {
+.imgHolder img {
   height: 100%;
 }
 
@@ -84,6 +85,14 @@ footer {
     height: 100%;
   }
 
+  .imgHolder {
+  height: 100%;
+  padding: 10px;
+}
+.imgHolder img {
+  height: 100%;
+}
+
 }
 @media screen and (max-width: 769px) {
   .carousel-item {
@@ -98,6 +107,13 @@ footer {
   .homeCard .card {
     height: 100%;
   }
+    .imgHolder {
+  height: 100%;
+  padding: 10px;
+}
+.imgHolder img {
+  height: 100%;
+}
 }
 
 @media screen and (max-width: 1025px) {
@@ -113,6 +129,13 @@ footer {
   .homeCard .card {
     height: 100%;
   }
+    .imgHolder {
+  height: 100%;
+  padding: 10px;
+}
+.imgHolder img {
+  height: 100%;
+}
 }
 
 @media screen and (max-width: 1041px) {
@@ -128,5 +151,12 @@ footer {
   .homeCard .card {
     height: 100%;
   }
+    .imgHolder {
+  height: 100%;
+  padding: 10px;
+}
+.imgHolder img {
+  height: 100%;
+}
 }
 

@@ -1,12 +1,7 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductList } from "../../redux/actions/productActions";
-import {
-  Col,
-  Container,
-  Row,
-  Button,
-} from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import Loader from "../layout/Loader";
 import Message from "../layout/Message";
 import Product from "../layout/Product";
@@ -17,11 +12,11 @@ export default function MobilePage() {
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
 
-const [visible, setVisible] = useState(3);
+  const [visible, setVisible] = useState(3);
 
-const loadMore = () => {
-  setVisible((prevValue) => prevValue + 3);
-};
+  const loadMore = () => {
+    setVisible((prevValue) => prevValue + 3);
+  };
   useEffect(() => {
     dispatch(getProductList());
   }, [dispatch]);
@@ -72,7 +67,7 @@ const loadMore = () => {
           <Row className="mt-5">
             {products
               .map((product) => {
-                if (product.category === "pc") {
+                if (product.category === "mobile") {
                   return (
                     <Col sm={12} md={6} lg={3} key={product._id}>
                       <Product product={product} />
@@ -80,7 +75,7 @@ const loadMore = () => {
                   );
                 }
               })
-              .slice(0, 4)}
+              .slice(0, Math.floor(Math.random() * 4 + 1))}
           </Row>
         )}
       </Container>

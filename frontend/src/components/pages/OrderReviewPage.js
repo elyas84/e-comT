@@ -6,7 +6,7 @@ import {
   Card,
   Row,
   ListGroupItem,
-  Container
+  Container,
 } from "react-bootstrap";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
@@ -22,7 +22,7 @@ import {
   orderEmpty,
 } from "../../redux/actions/orderActions";
 import Loader from "../layout/Loader";
-export default function OrderPage({ match, history }) {
+export default function OrderReviewPage({ match, history }) {
   const orderId = match.params.id;
 
   // console.log("ordId: ", orderId)
@@ -39,7 +39,7 @@ export default function OrderPage({ match, history }) {
   console.log("order: ", order);
 
   const orderedPay = useSelector((state) => state.orderedPay);
-  const { loading:payLoading, success } = orderedPay;
+  const { loading: payLoading, success } = orderedPay;
 
   const cart = useSelector((state) => state.cart);
   const totalPrice = cart.cartItems
@@ -69,8 +69,6 @@ export default function OrderPage({ match, history }) {
       dispatch({
         type: ORDER_PAY_REST,
       });
-
-      dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
         addPayPalScript();
@@ -81,7 +79,11 @@ export default function OrderPage({ match, history }) {
     }
   }, [dispatch, orderId, success, order]);
 
-  // console.log("order: ", order);
+  useEffect(() => {
+    dispatch(getOrderDetails(orderId));
+  }, [dispatch, orderId]);
+
+  console.log("order: ", order);
 
   const successPaymentHandler = (paymentResult) => {
     // console.log("Payment Result: ", paymentResult);
@@ -90,7 +92,7 @@ export default function OrderPage({ match, history }) {
   };
 
   return loading ? (
-    <Loader></Loader>
+    <Loader />
   ) : error ? (
     <Message>{error}</Message>
   ) : (
@@ -110,7 +112,7 @@ export default function OrderPage({ match, history }) {
               {order.isDelivered === true ? (
                 <Message variant="success">Order is Delivered.</Message>
               ) : (
-                <Message variant="warning">Order is preparing...</Message>
+                <Message variant="warning">Order is not delivered.</Message>
               )}
               <ListGroupItem>
                 <h3>Order Items</h3>
@@ -145,7 +147,12 @@ export default function OrderPage({ match, history }) {
                 <h4>Payment Method</h4>
                 <p>Method : {order.paymentMethod}</p>
                 {order.isPaid ? (
-                  <Message variant="success">payment is done</Message>
+                  <Message variant="success">
+                    payment is done at{" "}
+                    {order.paidAt.substring(0, 10) +
+                      "-" +
+                      order.paidAt.substring(12, 16)}
+                  </Message>
                 ) : (
                   <Message variant="warning">
                     Please, complete your payment.
@@ -163,7 +170,7 @@ export default function OrderPage({ match, history }) {
                 <ListGroupItem>
                   <Row>
                     <Col>Total</Col>
-                    <Col>$ {totalPrice}</Col>
+                    <Col>$ {order.totalPrice}</Col>
                   </Row>
                 </ListGroupItem>
                 {!order.isPaid && (
