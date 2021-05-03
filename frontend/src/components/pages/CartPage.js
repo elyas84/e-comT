@@ -14,10 +14,13 @@ import {
   Modal,
 } from "react-bootstrap";
 import { addToCart, deleteFromCart } from "../../redux/actions/cartActions";
-
 import Message from "../layout/Message";
 
 export default function CartPage({ match, location }) {
+
+const orderDetail = useSelector((state) => state.orderDetail);
+const { order } = orderDetail;
+
   //location is like ? 4
   const history = useHistory();
   const product_ID = match.params.id;
@@ -133,6 +136,7 @@ export default function CartPage({ match, location }) {
           )  : (
             <Message>Your cart is empty</Message>
           )}
+         
         </Col>
 
         <Col md={4}>

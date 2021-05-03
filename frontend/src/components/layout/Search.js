@@ -9,6 +9,7 @@ export default function Search() {
     e.preventDefault();
     if (keyword.trim()) {
       history.push("/search/" + keyword);
+      setKeyword("")
     } else {
       history.push("/");
       // <Message>There is no match! please, try again!</Message>
@@ -16,7 +17,7 @@ export default function Search() {
   };
   return (
     <Container className="mt-2">
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler} >
 
         <Form.Control
           type="text"

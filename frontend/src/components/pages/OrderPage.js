@@ -110,7 +110,7 @@ export default function OrderPage({ match, history }) {
               {order.isDelivered === true ? (
                 <Message variant="success">Order is Delivered.</Message>
               ) : (
-                <Message variant="warning">Order is preparing...</Message>
+                <Message variant="warning">Order will be handled</Message>
               )}
               <ListGroupItem>
                 <h3>Order Items</h3>

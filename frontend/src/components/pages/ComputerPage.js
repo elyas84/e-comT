@@ -47,7 +47,7 @@ export default function ComputerPage() {
             </Row>
           )}
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-5 text-center">
           <Col lg={12}>
             <Button variant="primary" onClick={loadMore}>
               Load more
@@ -67,7 +67,7 @@ export default function ComputerPage() {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Row className="mt-5">
+          <Row className="mt-5 ">
             {products
               .map((product) => {
                 if (product.category === "mobile") {
@@ -78,7 +78,7 @@ export default function ComputerPage() {
                   );
                 }
               })
-              .slice(0, Math.floor(Math.random() * 4+1))}
+              .slice(0, Math.floor(Math.random() * 4 + 1))}
           </Row>
         )}
       </Container>

@@ -18,10 +18,8 @@ import {
   getOrderList,
   deliverid,
   deleteOrder,
- 
 } from "../../redux/actions/orderActions";
 export default function CustomersOrderListPage() {
-
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -30,8 +28,8 @@ export default function CustomersOrderListPage() {
   const ordersList = useSelector((state) => state.ordersList);
   const { orderlist, loading, error } = ordersList;
 
-   const orderDelete = useSelector((state) => state.orderDelete);
-   const { deleteSuccess } = orderDelete;
+  const orderDelete = useSelector((state) => state.orderDelete);
+  const { deleteSuccess } = orderDelete;
 
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { updateSuccess } = orderDeliver;
@@ -49,13 +47,12 @@ export default function CustomersOrderListPage() {
     history.push("/");
   };
 
+  const [show, setShow] = useState(false);
 
-   const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [targetOrder, setTargetOrder] = useState("");
 
-   const handleClose = () => setShow(false);
-   const handleShow = () => setShow(true);
-   const [targetOrder, setTargetOrder] = useState("");
- 
   return (
     <Container>
       {userDetail.isAdmin ? (
@@ -100,32 +97,32 @@ export default function CustomersOrderListPage() {
                 <Table striped bordered hover responsive>
                   <thead>
                     <tr>
+                      <th className="p-2">#</th>
                       <th className="p-2">Order</th>
 
                       <th className="p-2">Customer</th>
                       <th className="p-2">Total</th>
                       <th className="p-2">Paid</th>
                       <th className="p-2">delivered</th>
-                      <th className="p-2">Delete order</th>
+                      <th className="p-2">Delete</th>
                     </tr>
                   </thead>
                   <tbody>
                     {loading && <Loader></Loader>}
                     {error && <Message>{error}</Message>}
                     {orderlist && orderlist.length ? (
-                      orderlist.map((order) => (
+                      orderlist.map((order, index) => (
                         <tr key={order._id}>
-                          <Link to={"/order-review/"+order._id}>
-   <td className="p-2">{order.orderItems[0]._id}</td>
-
+                          <td className="p-2">{index + 1}</td>
+                          <Link to={"/order-review/" + order._id}>
+                            <td className="p-2">{order.orderItems[0]._id}</td>
                           </Link>
-                       
 
                           <td className="p-2">{order.costumer.name}</td>
                           <td className="p-2">$ {order.totalPrice}</td>
                           {order.isPaid === true ? (
                             <td className="p-2">
-                              <Badge variant="info">Ok</Badge>
+                              <Badge variant="success">Ok</Badge>
                             </td>
                           ) : (
                             <td className="p-2">

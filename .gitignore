@@ -11,6 +11,8 @@ node_modules
 
 # production
 /build
+uploads
+/public/images
 
 # misc
 .env

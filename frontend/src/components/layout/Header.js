@@ -115,10 +115,13 @@ export default function Header() {
                 </Badge>
               )}
             </Link>
+            
           </Navbar.Collapse>
+               
         </Container>
+     
       </Navbar>
-      <Search />
+    <Search />
     </>
   );
 }
