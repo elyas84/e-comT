@@ -26,8 +26,8 @@ main {
 
 /****** Card ********/
 .imgHolder {
-  height: 35vh;
-  padding: 15px;
+  height: 250px;
+  padding: 10px;
 }
 .imgHolder img {
   height: 100%;

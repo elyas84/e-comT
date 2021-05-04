@@ -47,14 +47,8 @@ export default function ComputerPage() {
             </Row>
           )}
         </Row>
-        <Row className="mt-5 text-center">
-          <Col lg={12}>
-            <Button variant="primary" onClick={loadMore}>
-              Load more
-            </Button>
-          </Col>
-        </Row>
       </Container>
+
       <h3
         className="py-3 text-center mt-5 mb-5 text-white"
         style={{ backgroundColor: "#919aa1" }}
@@ -81,6 +75,14 @@ export default function ComputerPage() {
               .slice(0, Math.floor(Math.random() * 4 + 1))}
           </Row>
         )}
+
+        <Row className="mt-5 text-center">
+          <Col lg={12}>
+            <Button variant="outline-primary" onClick={loadMore}>
+              Load more
+            </Button>
+          </Col>
+        </Row>
       </Container>
     </>
   );

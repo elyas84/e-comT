@@ -98,7 +98,7 @@ export default function AddProductPage() {
 
   return (
     <>
-      <Container>
+      <Container className="py-5">
         <Row className="">
           <Col lg={3}>
             <ListGroup as="ul">

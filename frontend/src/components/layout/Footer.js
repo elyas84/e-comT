@@ -21,7 +21,9 @@ export default function Footer() {
             </div>
             <hr />
             <h6>User section</h6>
-           
+            <div>
+              <Link to="/login">Login</Link>
+            </div>
             <div>
               <Link to="/register">Regsiter</Link>
             </div>
@@ -38,7 +40,7 @@ export default function Footer() {
           </Col>
           <Col lg={3} md={6} sm={12}>
             <h6>Where to find us</h6>
-            <b>E-Shop</b> <br/>
+            <b>E-Shop</b> <br />
             Storgatan 100A <br />
             Stockholm
             <br />
@@ -56,7 +58,7 @@ export default function Footer() {
                 <Form.Label>Email address</Form.Label>
                 <Form.Control type="email" />
               </Form.Group>
-              <Button variant="primary" type="submit" block >
+              <Button variant="primary" type="submit" block>
                 Subscribe
               </Button>
             </Form>

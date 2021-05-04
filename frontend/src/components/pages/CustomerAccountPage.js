@@ -69,7 +69,7 @@ export default function CustomerAccountPage() {
 
 
   return (
-    <Container>
+    <Container className="py-5">
       <Row className="m-auto">
         <Col lg={3}>
           <ListGroup as="ul">

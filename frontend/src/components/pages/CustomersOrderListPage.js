@@ -54,7 +54,7 @@ export default function CustomersOrderListPage() {
   const [targetOrder, setTargetOrder] = useState("");
 
   return (
-    <Container>
+    <Container className="py-5">
       {userDetail.isAdmin ? (
         <Row className="">
           <Col lg={3}>

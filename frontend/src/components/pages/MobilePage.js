@@ -44,13 +44,6 @@ export default function MobilePage() {
             </Row>
           )}
         </Row>
-        <Row className="mt-5">
-          <Col lg={12}>
-            <Button variant="primary" onClick={loadMore}>
-              Load more
-            </Button>
-          </Col>
-        </Row>
       </Container>
       <h3
         className="py-3 text-center mt-5 mb-5 text-white"
@@ -67,7 +60,9 @@ export default function MobilePage() {
           <Row className="mt-5">
             {products
               .map((product) => {
+                
                 if (product.category === "mobile") {
+                
                   return (
                     <Col sm={12} md={6} lg={3} key={product._id}>
                       <Product product={product} />
@@ -76,8 +71,20 @@ export default function MobilePage() {
                 }
               })
               .slice(0, Math.floor(Math.random() * 4 + 1))}
+
+
+
+
+
           </Row>
         )}
+        <Row className="mt-5 text-center">
+          <Col lg={12}>
+            <Button variant="outline-primary" onClick={loadMore}>
+              Load more
+            </Button>
+          </Col>
+        </Row>
       </Container>
     </>
   );

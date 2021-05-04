@@ -50,7 +50,7 @@ export default function ProductListPage() {
   const handleShow = () => setShow(true);
   const [targetProd, setTargetProd] = useState("");
   return (
-    <Container>
+    <Container className="py-5">
       <Row className="">
         <Col lg={3}>
           <ListGroup as="ul">
@@ -99,6 +99,7 @@ export default function ProductListPage() {
                     <th className="p-2">brand</th>
                     <th className="p-2">price</th>
                     <th className="p-2">countInStock</th>
+                    <th className="p-2">Category</th>
                     <th className="p-2">Edit</th>
                     <th className="p-2">Delete</th>
                   </tr>
@@ -119,7 +120,7 @@ export default function ProductListPage() {
                           <td className="p-2">{product.brand}</td>
                           <td className="p-2">{product.price}</td>
                           <td className="p-2">{product.countInStock}</td>
-
+                          <td className="p-2">{product.category}</td>
                           <td className="p-1">
                             <Link
                               to={"/admin/" + product._id + "/edit-product"}

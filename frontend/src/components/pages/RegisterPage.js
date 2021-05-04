@@ -39,7 +39,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <Container>
+    <Container className="py-5">
       <Row className=" justify-content-center">
         <Col lg={5} className="bg-light mr-3">
           <div className="py-5">

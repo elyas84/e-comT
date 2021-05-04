@@ -33,7 +33,7 @@ export default function CustomerOrderPage() {
     history.push("/");
   };
   return (
-    <Container>
+    <Container className="py-5">
       <Row>
         <Col lg={3}>
           <ListGroup as="ul">

@@ -28,7 +28,7 @@ const { userDetail,loading, error } = userLogin;
     };
   return (
     <Container>
-      <Row className="">
+      <Row className="py-5">
         <Col lg={6} className="bg-light m-auto">
           <div className="py-5">
             <h2>Login</h2>

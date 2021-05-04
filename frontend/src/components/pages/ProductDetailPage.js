@@ -39,6 +39,11 @@ export default function ProductDetailPage({ match }) {
     history.push("/cart/" + Product_ID + "?quantity=" + qyt);
   };
 
+    const [visible, setVisible] = useState(3);
+
+    const loadMore = () => {
+      setVisible((prevValue) => prevValue + 3);
+    };
   return (
     <>
       <Container>
@@ -88,9 +93,9 @@ export default function ProductDetailPage({ match }) {
                   </Row>
                 </ListGroupItem>
               )}
-              <h4 className="mt-3 mb-3">$ {product.price}</h4>
+              <h4 className="mt-3 mb-3 ">$ {product.price}</h4>
 
-              <Row>
+              <Row className="text-right">
                 <Col>
                   <Button
                     variant="warning"
@@ -128,9 +133,16 @@ export default function ProductDetailPage({ match }) {
                   );
                 }
               })
-              .slice(0, Math.floor(Math.random() * 4+1))}
+              .slice(0, Math.floor(Math.random() * 4 + 1))}
           </Row>
         )}
+        <Row className="mt-5 text-center">
+          <Col lg={12}>
+            <Button variant="outline-primary" onClick={loadMore}>
+              Load more
+            </Button>
+          </Col>
+        </Row>
       </Container>
     </>
   );

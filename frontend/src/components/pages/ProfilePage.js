@@ -34,7 +34,7 @@ export default function ProfilePage() {
     history.push("/");
   };
   return (
-    <Container>
+    <Container className="py-5">
       {userDetail.isAdmin ? (
         <Row className="">
           <Col lg={3}>
@@ -76,13 +76,24 @@ export default function ProfilePage() {
                   </Col>
                 </Row>
 
-<hr/>
-<h4>As an Admin, you can manage the orders and deliver staff</h4>
-<h4>As an Admin, you can Delete, update your client's order</h4>
+                <hr />
+                <Row>
+                  <Col lg={6} className="m-auto">
+                        <iframe
+                  src="https://giphy.com/embed/l3q2WMhNcyFOWP280"
+                  width="380"
+                  height="380"
+                  frameBorder="0"
+                  className="giphy-embed"
+                  allowFullScreen
+                ></iframe>
+                  </Col>
+                </Row>
 
-              
+            
+             
               </Col>
-              <Col></Col>
+              {/* <Col></Col> */}
             </Row>
           </Col>
         </Row>
