@@ -25,6 +25,16 @@ app.get("/api/config/paypal", (req, res) =>
 
 app.use("/uploads", express.static(path.join(path.resolve(), "/uploads")));
 
+// Deployment Script
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("frontend/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(path.resolve(), "frontend", "build", "index.html")); //relative path
+  });
+}
+
 
 app.listen(PORT, () => {
   console.log("Server is running: " + PORT);
