@@ -32,7 +32,7 @@ export default function SearchPage({ match }) {
         ) : (
           <Row>
             {products.slice(0, visible).map((product) => (
-              <Col lg={4} md={6} sm={12} key={product._id} className="py-2">
+              <Col lg={3} md={6} sm={12} key={product._id}>
                 <Product product={product} />
               </Col>
             ))}
