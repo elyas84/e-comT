@@ -65,6 +65,7 @@ export default function CustomerOrderPage() {
               <Table striped bordered hover responsive>
                 <thead>
                   <tr>
+                    <th>#</th>
                     <th>ID</th>
                     <th>Name</th>
 
@@ -77,37 +78,29 @@ export default function CustomerOrderPage() {
                   {loading && <Loader />}
                   {error && <Message>{error}</Message>}
                   {Myorders && Myorders.length
-                    ? Myorders.map(
-                        (myorder) => (
-                          console.log(myorder),
-                          (
-                            <tr key={myorder._id}>
-                              <td className="p-1">
-                                {myorder.orderItems[0]._id}
-                              </td>
-                              <td className="p-1">
-                                {myorder.orderItems[0].name}
-                              </td>
+                    ? Myorders.map((myorder, index) => (
+                        <tr key={myorder._id}>
+                          <td className="p-1">{index+1}</td>
+                          <td className="p-1">{myorder.orderItems[0]._id}</td>
+                          <td className="p-1">{myorder.orderItems[0].name}</td>
 
-                              <td className="p-1">$ {myorder.totalPrice}</td>
-                              <td className="p-1">
-                                {myorder.isDelivered === false ? (
-                                  <Badge variant="info">processing</Badge>
-                                ) : (
-                                  <Badge variant="success">
-                                    {myorder.paymentResult.status}
-                                  </Badge>
-                                )}
-                              </td>
-                              <td className="p-0">
-                                <Link to={"/order-review/" + myorder._id}>
-                                  <Badge variant="warning">view</Badge>
-                                </Link>
-                              </td>
-                            </tr>
-                          )
-                        )
-                      )
+                          <td className="p-1">$ {myorder.totalPrice}</td>
+                          <td className="p-1">
+                            {myorder.isDelivered === false ? (
+                              <Badge variant="info">processing</Badge>
+                            ) : (
+                              <Badge variant="success">
+                                {myorder.paymentResult.status}
+                              </Badge>
+                            )}
+                          </td>
+                          <td className="p-0">
+                            <Link to={"/order-review/" + myorder._id}>
+                              <Badge variant="warning">view</Badge>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))
                     : null}
                 </tbody>
               </Table>
