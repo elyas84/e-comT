@@ -22,7 +22,7 @@ import {
   orderEmpty,
 } from "../../redux/actions/orderActions";
 import Loader from "../layout/Loader";
-export default function OrderReviewPage({ match, history }) {
+export default function OrderReviewPage({ match }) {
   const orderId = match.params.id;
 
   // console.log("ordId: ", orderId)
@@ -74,7 +74,7 @@ export default function OrderReviewPage({ match, history }) {
         addPayPalScript();
       } else {
         setSdkReady(true);
-        dispatch(orderEmpty());
+        // dispatch(orderEmpty());
       }
     }
   }, [dispatch, orderId, success, order]);

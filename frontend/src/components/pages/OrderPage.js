@@ -69,6 +69,7 @@ export default function OrderPage({ match, history }) {
       dispatch({
         type: ORDER_PAY_REST,
       });
+        dispatch(orderEmpty());
 
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
@@ -76,7 +77,7 @@ export default function OrderPage({ match, history }) {
         addPayPalScript();
       } else {
         setSdkReady(true);
-        dispatch(orderEmpty());
+      
       }
     }
   }, [dispatch, orderId, success, order]);
@@ -163,7 +164,7 @@ export default function OrderPage({ match, history }) {
                 <ListGroupItem>
                   <Row>
                     <Col>Total</Col>
-                    <Col>$ {totalPrice}</Col>
+                    <Col>$ {order.totalPrice}</Col>
                   </Row>
                 </ListGroupItem>
                 {!order.isPaid && (

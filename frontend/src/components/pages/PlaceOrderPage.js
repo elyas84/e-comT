@@ -19,6 +19,9 @@ export default function PlaceOrderPage() {
   const cart = useSelector((state) => state.cart);
 
   console.log("Cart: ",cart)
+
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userDetail } = userLogin;
  
   // calculate price
   
@@ -32,6 +35,15 @@ export default function PlaceOrderPage() {
   console.log("cart", cart);
   const dispatch = useDispatch();
   const history = useHistory();
+
+
+  useEffect(() => {
+    if (!userDetail.name) {
+      history.push("/login");
+    }
+  
+  }, [userDetail, history, dispatch]);
+
 
   useEffect(() => {
     if (success) {

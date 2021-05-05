@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Nav,
   Navbar,
@@ -10,7 +10,9 @@ import {
 } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-
+import {
+  orderEmpty,
+} from "../../redux/actions/orderActions";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/userActions";
 
@@ -25,12 +27,20 @@ export default function Header() {
 
   const orderDetail = useSelector((state) => state.orderDetail);
   const { order } = orderDetail;
+    const orderedPay = useSelector((state) => state.orderedPay);
+    const { success } = orderedPay;
 
   const logoutHandler = () => {
     dispatch(logout());
   };
 
   const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    if (success) {
+      dispatch(orderEmpty());
+    }
+  }, [success, dispatch]);
 
   const seachHandler = (e) => {
     e.preventDefault();
