@@ -6,6 +6,7 @@ import {
   Container,
   Row,
   Button,
+  Card
  
 } from "react-bootstrap";
 import Loader from "../layout/Loader";
@@ -18,10 +19,10 @@ export default function MobilePage() {
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
 
+  console.log(products)
   const [visible, setVisible] = useState(3);
 
 
- 
 
   const loadMore = () => {
     setVisible((prevValue) => prevValue + 3);
@@ -31,11 +32,37 @@ export default function MobilePage() {
   }, [dispatch]);
   
 
+
+
   return (
     <>
       <Container>
         <h2 className="text-center py-5"> Mobiles</h2>
-   
+        <Row>
+          <Col lg={2}>
+            <label htmlFor="samsung" className="mr-3">
+              Samsung
+            </label>
+            <input
+              type="checkbox"
+              name="samsung"
+              id="samsung"
+           
+            />
+          </Col>
+          <Col lg={2}>
+            <label htmlFor="iphone" className="mr-3">
+              Iphone
+            </label>
+            <input type="checkbox" name="iphone" id="iphone" />
+          </Col>
+          <Col lg={2}>
+            <label htmlFor="nokia" className="mr-3">
+              Nokia
+            </label>
+            <input type="checkbox" name="nokia" id="nokia" />
+          </Col>
+        </Row>
         <Row>
           {loading ? (
             <Loader />

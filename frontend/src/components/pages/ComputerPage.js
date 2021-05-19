@@ -28,6 +28,32 @@ export default function ComputerPage() {
     <>
       <Container>
         <h2 className="text-center py-5"> Computers and games</h2>
+        <Row>
+          <Col lg={2}>
+            <label htmlFor="mac" className="mr-3">
+              MacBook
+            </label>
+            <input type="checkbox" name="mac" id="mac" />
+          </Col>
+          <Col lg={2}>
+            <label htmlFor="win" className="mr-3">
+              Windows
+            </label>
+            <input type="checkbox" name="win" id="win" />
+          </Col>
+          <Col lg={2}>
+            <label htmlFor="xbox" className="mr-3">
+              Xbox
+            </label>
+            <input type="checkbox" name="xbox" id="xbox" />
+          </Col>
+          <Col lg={2}>
+            <label htmlFor="ps" className="mr-3">
+              Play Station
+            </label>
+            <input type="checkbox" name="ps" id="ps" />
+          </Col>
+        </Row>
         <Row className="p-3">
           {loading ? (
             <Loader />

@@ -77,7 +77,7 @@ export default function Header() {
               to="/"
               style={{ color: "white", fontWeight: "bold" }}
             >
-              <Nav.Link>Hi, {userDetail.name}|</Nav.Link>
+              <Nav.Link>Hi, {userDetail.name}</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/profile">
               <Nav.Link>My profile </Nav.Link>
