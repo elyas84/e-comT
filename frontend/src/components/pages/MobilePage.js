@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductList } from "../../redux/actions/productActions";
-import {
-  Col,
-  Container,
-  Row,
-  Button,
-  Card
- 
-} from "react-bootstrap";
+import { Col, Container, Row, Button, Card } from "react-bootstrap";
 import Loader from "../layout/Loader";
 import Message from "../layout/Message";
 import Product from "../layout/Product";
@@ -19,10 +12,8 @@ export default function MobilePage() {
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
 
-  console.log(products)
+  console.log(products);
   const [visible, setVisible] = useState(3);
-
-
 
   const loadMore = () => {
     setVisible((prevValue) => prevValue + 3);
@@ -30,9 +21,31 @@ export default function MobilePage() {
   useEffect(() => {
     dispatch(getProductList());
   }, [dispatch]);
-  
 
+  // checkbox
 
+  const [samsung, setSamsung] = useState(false);
+  const [iphone, setIphone] = useState(false);
+  const [nokia, setNokia] = useState(false);
+
+  // checkbox filtering logic
+
+  const getSamsungOnly = products.filter((userCheck) => {
+    if (userCheck.brand === "Samsung") {
+      return getProductList;
+    }
+  });
+  const getIphoneOnly = products.filter((userCheck) => {
+    if (userCheck.brand === "Iphone") {
+      return getProductList;
+    }
+  });
+
+  const getNokiaOnly = products.filter((userCheck) => {
+    if (userCheck.brand === "Nokia") {
+      return getProductList;
+    }
+  });
 
   return (
     <>
@@ -45,32 +58,59 @@ export default function MobilePage() {
             </label>
             <input
               type="checkbox"
-              name="samsung"
-              id="samsung"
-           
+              checked={samsung}
+              onChange={(e) => {
+                setSamsung(e.target.checked);
+              }}
             />
           </Col>
           <Col lg={2}>
             <label htmlFor="iphone" className="mr-3">
               Iphone
             </label>
-            <input type="checkbox" name="iphone" id="iphone" />
+            <input
+              type="checkbox"
+              checked={iphone}
+              onChange={(e) => {
+                setIphone(e.target.checked);
+              }}
+            />
           </Col>
           <Col lg={2}>
             <label htmlFor="nokia" className="mr-3">
               Nokia
             </label>
-            <input type="checkbox" name="nokia" id="nokia" />
+            <input
+              type="checkbox"
+              checked={nokia}
+              onChange={(e) => {
+                setNokia(e.target.checked);
+              }}
+            />
           </Col>
         </Row>
+        {loading && <Loader />}
+        {error && <Message>{error}</Message>}
         <Row>
-          {loading ? (
-            <Loader />
-          ) : error ? (
-            <Message variant="danger">{error}</Message>
-          ) : (
-            <Row className="mt-3">
-              {products.map((product) => {
+          {samsung && getSamsungOnly && getSamsungOnly.length
+            ? getSamsungOnly.map((product) => (
+                <Col sm={12} md={6} lg={3} key={product._id}>
+                  <Product product={product} />
+                </Col>
+              ))
+            : iphone && getIphoneOnly && getIphoneOnly.length
+            ? getIphoneOnly.map((product) => (
+                <Col sm={12} md={6} lg={3} key={product._id}>
+                  <Product product={product} />
+                </Col>
+              ))
+            : nokia && getNokiaOnly && getNokiaOnly.length
+            ? getNokiaOnly.map((product) => (
+                <Col sm={12} md={6} lg={3} key={product._id}>
+                  <Product product={product} />
+                </Col>
+              ))
+            : products.map((product) => {
                 if (product.category === "mobile") {
                   return (
                     <Col sm={12} md={6} lg={3} key={product._id}>
@@ -79,8 +119,6 @@ export default function MobilePage() {
                   );
                 }
               })}
-            </Row>
-          )}
         </Row>
       </Container>
       <h3
@@ -120,3 +158,30 @@ export default function MobilePage() {
     </>
   );
 }
+
+/* {
+                
+                products.map((product) => {
+                if (product.category === "mobile") {
+                  return (
+                    <Col sm={12} md={6} lg={3} key={product._id}>
+                      <Product product={product} />
+                    </Col>
+                  );
+                }
+              })
+              
+              
+              } */
+
+//  {
+//    samsung
+//      ? getSamsungOnly && getSamsungOnly.lenght
+//        ? getSamsungOnly.map((product) => (
+//            <Col sm={12} md={6} lg={3} key={product._id}>
+//              <Product product={product} />
+//            </Col>
+//          ))
+//        : null
+//      : null;
+//  }
