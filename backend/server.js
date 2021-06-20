@@ -25,15 +25,15 @@ app.get("/api/config/paypal", (req, res) =>
 
 app.use("/uploads", express.static(path.join(path.resolve(), "/uploads")));
 
-// Deployment Script
-
+// Depyoment
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
+  app.use(express.static("client/build"));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(path.resolve(), "frontend", "build", "index.html")); //relative path
+    res.sendFile(path.join(path.resolve(), "client", "build", "index.html")); //relative path
   });
 }
+
 
 
 app.listen(PORT, () => {
