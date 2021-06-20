@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server",
-    "server": "nodemon backend/server",
+    "start": "node server/server",
+    "server": "nodemon server/server",
     "client": "npm start --prefix frontend",
     "app": "concurrently \"npm run server\" \"npm run client\" ",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "Elyas",
   "license": "ISC",
