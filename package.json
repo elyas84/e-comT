@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server/server",
     "server": "nodemon server/server",
-    "client": "npm start --prefix frontend",
+    "client": "npm start --prefix client",
     "app": "concurrently \"npm run server\" \"npm run client\" ",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
